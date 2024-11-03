@@ -1,13 +1,30 @@
 const assessmentService = require("../services/assessmentService");
+const {
+  PrimaryAssessment,
+  SecondaryAssessment,
+  VocationalAssessment,
+  CustomAssessment,
+} = require("../models/models");
+
+const modelMap = {
+  PrimaryAssessment,
+  SecondaryAssessment,
+  VocationalAssessment,
+  CustomAssessment,
+};
 
 exports.createAssessment = async (req, res) => {
+  const modelName = req.params.model;
+  const model = modelMap[modelName];
+
   try {
     const assessment = await assessmentService.createAssessment(
-      req.assessmentModel,
+      model,
       req.body
     );
     res.status(201).json(assessment);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: error.message });
   }
 };

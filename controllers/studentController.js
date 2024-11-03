@@ -108,3 +108,16 @@ exports.delStudent = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getAllAssessments = async (req, res) => {
+  console.log(req.params.id);
+  const id = req.params.id;
+  try {
+    const response = await studentService.getAllAssessments(id);
+    res.status(200).json({
+      message: response,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

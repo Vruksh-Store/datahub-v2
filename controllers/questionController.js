@@ -2,6 +2,7 @@ const questionService = require("../services/questionService");
 
 exports.createQuestion = async (req, res) => {
   try {
+    console.log(req.body);
     const question = await questionService.createQuestion(req.body);
     res.status(201).json(question);
   } catch (error) {
@@ -21,6 +22,25 @@ exports.getAllQuestions = async (req, res) => {
 exports.getPrimaryQuestions = async (req, res) => {
   try {
     const primaryQs = await questionService.getPrimary();
+    res.status(200).json(primaryQs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getSecondaryQuestions = async (req, res) => {
+  try {
+    console.log("first");
+    const primaryQs = await questionService.getSecondary();
+    res.status(200).json(primaryQs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getVocationalQuestions = async (req, res) => {
+  try {
+    const primaryQs = await questionService.getVocational();
     res.status(200).json(primaryQs);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -4,7 +4,7 @@ const checkIfExist = require("../middlewares/checkToken");
 
 const router = express.Router();
 
-router.use(checkIfExist);
+// router.use(checkIfExist);
 
 // post reqs
 router.post("/", questionController.createQuestion);
@@ -12,6 +12,8 @@ router.post("/", questionController.createQuestion);
 // get reqs
 router.get("/allquestions", questionController.getAllQuestions);
 router.get("/primaryquestions", questionController.getPrimaryQuestions);
+router.get("/secondaryquestions", questionController.getSecondaryQuestions);
+router.get("/vocationalquestions", questionController.getVocationalQuestions);
 router.get("/:questionId", questionController.getIndividualQuestion);
 router.get("/category/:title", questionController.getIndividualQuestionByTitle);
 

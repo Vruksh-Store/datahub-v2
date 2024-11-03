@@ -7,11 +7,18 @@ const authRoutes = require("./routes/authRoute.js");
 const assessmentRoutes = require("./routes/assessmentRoute.js");
 const questionRoutes = require("./routes/questionRoute.js");
 const homeProgramRoutes = require("./routes/homeProgramRoute.js");
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+const corsOptions = {
+  options: "*",
+};
+
+app.use(cors(corsOptions));
 
 // student-rout
 app.use("/api/students", studentRoutes);

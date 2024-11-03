@@ -5,10 +5,10 @@ const checkIfExist = require("../middlewares/checkToken");
 
 const router = express.Router();
 
-router.use(checkIfExist, setAssessmentModel);
+// router.use(checkIfExist, setAssessmentModel);
 
 // POST request
-router.post("/", assessmentController.createAssessment);
+router.post("/:model", assessmentController.createAssessment);
 
 // GET requests
 router.get("/student/:studentId", assessmentController.getAssessments);

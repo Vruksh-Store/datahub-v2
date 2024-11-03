@@ -10,7 +10,19 @@ async function getAll() {
 
 async function getPrimary() {
   return await Question.find({
-    name: "primary",
+    branch: "primary",
+  });
+}
+
+async function getSecondary() {
+  return await Question.find({
+    branch: "secondary",
+  });
+}
+
+async function getVocational() {
+  return await Question.find({
+    branch: "vocational",
   });
 }
 
@@ -44,6 +56,8 @@ module.exports = {
   createQuestion,
   getAll,
   getPrimary,
+  getSecondary,
+  getVocational,
   getIndividualQ,
   getIndividualQByTitle,
   updateIndividualQuestion,
