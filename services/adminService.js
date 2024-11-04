@@ -30,7 +30,7 @@ async function deleteStaff(staffId) {
 }
 
 async function getStaffs() {
-  return await Staff.find();
+  return await Staff.find({ role: "teacher" });
 }
 
 module.exports = {

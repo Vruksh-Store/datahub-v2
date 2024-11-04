@@ -197,30 +197,40 @@ const CustomAssessmentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const HomeProgramSchema = new mongoose.Schema({
-  studentReference: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Student",
-    required: true,
+const HomeProgramSchema = new mongoose.Schema(
+  {
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
+    },
+    noOfDays: {
+      type: Number,
+      required: true,
+    },
+    name: {
+      type: String,
+    },
+    exercises: [
+      {
+        name: { type: String, required: true },
+        repetitions: [
+          {
+            date: {
+              type: Date,
+              required: true,
+            },
+            completed: Boolean,
+            feedback: {
+              type: String,
+            },
+          },
+        ],
+      },
+    ],
   },
-  exercises: [
-    {
-      name: { type: String, required: true },
-      repetitions: { type: String, required: true },
-    },
-  ],
-  dailyLogs: [
-    {
-      date: { type: Date, required: true },
-      exercises: [
-        {
-          name: { type: String, required: true },
-          completed: { type: Boolean, default: false },
-        },
-      ],
-    },
-  ],
-});
+  { timestamps: true }
+);
 
 const TemplateCaseRecordSchema = new mongoose.Schema(
   {
@@ -284,7 +294,14 @@ const QuestionSchema = new mongoose.Schema(
   {
     branch: {
       type: String,
-      enum: ["primary", "secondary", "vocational", "custom"],
+      enum: [
+        "primary",
+        "secondary",
+        "vocational",
+        "custom",
+        "templatecase",
+        "speechlanguage",
+      ],
       required: true,
     },
     name: {

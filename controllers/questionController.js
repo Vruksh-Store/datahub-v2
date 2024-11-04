@@ -47,6 +47,15 @@ exports.getVocationalQuestions = async (req, res) => {
   }
 };
 
+exports.getCustomQuestions = async (req, res) => {
+  try {
+    const primaryQs = await questionService.getCustom(req.params.name);
+    res.status(200).json(primaryQs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.getIndividualQuestion = async (req, res) => {
   try {
     const indQuestion = await questionService.getIndividualQ(
@@ -71,12 +80,10 @@ exports.getIndividualQuestionByTitle = async (req, res) => {
 
 exports.updateQuestion = async (req, res) => {
   try {
-    const updated = await questionService.updateIndividualQuestion(
-      req.params.id,
-      req.body
-    );
+    const updated = await questionService.updateIndividualQuestion(req.body);
     res.status(200).json({ message: updated });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

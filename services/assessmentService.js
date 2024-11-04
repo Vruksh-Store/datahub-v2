@@ -1,4 +1,4 @@
-const { Student } = require("../models/models");
+const { Student, Question } = require("../models/models");
 
 async function createAssessment(model, data) {
   console.log(model, data);
@@ -25,6 +25,11 @@ async function getAssessments(model, studentId) {
 }
 
 async function getIndividualAssessment(model, id) {
+  console.log(model);
+  console.log("Model Type:", typeof model);
+  console.log("Model:", model);
+  console.log("Model Name:", model.modelName);
+  console.log("Is Model a Mongoose Model?", !!model.schema);
   return await model.findById(id).populate("answers.questionId");
 }
 
@@ -36,10 +41,28 @@ async function deleteAssessment(model, id) {
   return await model.findByIdAndDelete(id);
 }
 
+async function customAssessmentNames() {
+  const customQuestions = await Question.find({ branch: "custom" });
+
+  const uniqueNames = new Set(customQuestions.map((question) => question.name));
+
+  const uniqueNamesArray = Array.from(uniqueNames);
+
+  return uniqueNamesArray;
+}
+
+async function customAssessmentQuesions(name) {
+  const customQuestions = await Question.find({ branch: "custom", name : name });
+
+  return customQuestions;
+}
+
 module.exports = {
   createAssessment,
   getAssessments,
   getIndividualAssessment,
   updateAssessmentRecord,
   deleteAssessment,
+  customAssessmentNames,
+  customAssessmentQuesions
 };

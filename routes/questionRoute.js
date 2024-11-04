@@ -14,11 +14,12 @@ router.get("/allquestions", questionController.getAllQuestions);
 router.get("/primaryquestions", questionController.getPrimaryQuestions);
 router.get("/secondaryquestions", questionController.getSecondaryQuestions);
 router.get("/vocationalquestions", questionController.getVocationalQuestions);
+router.get("/customquestions/:name", questionController.getCustomQuestions);
 router.get("/:questionId", questionController.getIndividualQuestion);
 router.get("/category/:title", questionController.getIndividualQuestionByTitle);
 
 // // put reqs
-router.put("/:id", questionController.updateQuestion);
+router.put("/", questionController.updateQuestion);
 
 // // delete reqs
 router.delete("/:id", questionController.deleteIndividualQuestion);

@@ -26,6 +26,13 @@ async function getVocational() {
   });
 }
 
+async function getCustom(name) {
+  return await Question.find({
+    branch: "vocational",
+    name: name,
+  });
+}
+
 async function getIndividualQ(id) {
   return await Question.findById(id);
 }
@@ -36,8 +43,11 @@ async function getIndividualQByTitle(data) {
   });
 }
 
-async function updateIndividualQuestion(id, data) {
-  return await Question.findByIdAndUpdate(id, data);
+async function updateIndividualQuestion(updates) {
+  const updatePromises = updates.map(({ id, data }) =>
+    Question.findByIdAndUpdate(id, { question: data.question })
+  );
+  return await Promise.all(updatePromises);
 }
 
 async function delQ(id) {
@@ -58,6 +68,7 @@ module.exports = {
   getPrimary,
   getSecondary,
   getVocational,
+  getCustom,
   getIndividualQ,
   getIndividualQByTitle,
   updateIndividualQuestion,

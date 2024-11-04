@@ -8,6 +8,8 @@ const assessmentRoutes = require("./routes/assessmentRoute.js");
 const questionRoutes = require("./routes/questionRoute.js");
 const homeProgramRoutes = require("./routes/homeProgramRoute.js");
 const cors = require("cors");
+const customAssessmentRoutes = require("./routes/customAssessmentRoute.js");
+const dashboardRoutes = require("./routes/dashboard.js");
 
 dotenv.config();
 
@@ -43,6 +45,11 @@ app.use("/api/questions", questionRoutes);
 
 // home
 app.use("/api/home", homeProgramRoutes);
+
+app.use("/api/custom", customAssessmentRoutes);
+
+//dashboard
+app.use("/api/dashboard", dashboardRoutes);
 
 console.log(process.env.MONGO_URI);
 const connectDB = async () => {
