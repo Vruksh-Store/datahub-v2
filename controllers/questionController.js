@@ -47,23 +47,32 @@ exports.getVocationalQuestions = async (req, res) => {
   }
 };
 
-exports.getTemplateCaseQuestions = async(req,res) => {
+exports.getCustomQuestions = async (req, res) => {
+  try {
+    const primaryQs = await questionService.getCustom(req.params.name);
+    res.status(200).json(primaryQs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getTemplateCaseQuestions = async (req, res) => {
   try {
     const primaryQs = await questionService.getTemplateCase();
     res.status(200).json(primaryQs);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
-exports.getSpeechLanguageQuestions = async(req,res) => {
+exports.getSpeechLanguageQuestions = async (req, res) => {
   try {
     const primaryQs = await questionService.getSpeechLanguage();
     res.status(200).json(primaryQs);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 exports.getIndividualQuestion = async (req, res) => {
   try {
@@ -89,12 +98,10 @@ exports.getIndividualQuestionByTitle = async (req, res) => {
 
 exports.updateQuestion = async (req, res) => {
   try {
-    const updated = await questionService.updateIndividualQuestion(
-      req.params.id,
-      req.body
-    );
+    const updated = await questionService.updateIndividualQuestion(req.body);
     res.status(200).json({ message: updated });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

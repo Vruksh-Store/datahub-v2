@@ -18,7 +18,13 @@ async function getHomeProgramsByStudent(studentId) {
 }
 
 async function updateHomeProgram(id, data) {
-  return await HomeProgram.findByIdAndUpdate(id, data, { new: true });
+  const updatedHomeProgram = await HomeProgram.findByIdAndUpdate(
+    id,
+    { $set: { exercises: data } },
+    { new: true }
+  );
+
+  return updatedHomeProgram;
 }
 
 async function deleteHomeProgram(id) {

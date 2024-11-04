@@ -14,10 +14,10 @@ router.post("/:model", assessmentController.createAssessment);
 
 // GET requests
 router.get("/student/:studentId", assessmentController.getAssessments);
-router.get("/assessment/:id", assessmentController.getAssessment);
+router.get("/:model/:id", assessmentController.getAssessment);
 
 // PUT request
-router.put("/update/:id", assessmentController.updateRecord);
+router.put("/update/:model/:id", assessmentController.updateRecord);
 
 // DELETE request
 router.delete("/:id", assessmentController.delAssessment);

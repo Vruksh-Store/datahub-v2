@@ -63,10 +63,11 @@ exports.forgetPassword = async (req, res) => {
 exports.updateFee = async (req, res) => {
   const id = req.params.id;
   const { date, amount } = req.body;
+  console.log(date, amount, id);
   try {
     const updateFees = await studentService.feesUpdate(id, date, amount);
     if (!updateFees) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Doesn't updated successfully due to invalid student id",
       });
     }
@@ -80,12 +81,13 @@ exports.updateFee = async (req, res) => {
 
 exports.updateStudents = async (req, res) => {
   const id = req.params.id;
-  const { name, phone, level } = req.body;
+  const { name, phone, level, registerNo } = req.body;
   const updateStudent = await studentService.studentUpdate(
     id,
     name,
     phone,
-    level
+    level,
+    registerNo
   );
   if (!updateStudent) {
     res.status(400).json({ message: "student is not updated with given id" });

@@ -59,10 +59,10 @@ async function feesUpdate(studentId, date, amount) {
   );
 }
 
-async function studentUpdate(id, name, phone, level) {
+async function studentUpdate(id, name, phone, level, registerNo) {
   return await Student.findByIdAndUpdate(
     id,
-    { name, phone, level },
+    { name, phone, level, registerNo },
     { new: true }
   );
 }

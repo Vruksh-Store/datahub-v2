@@ -6,7 +6,7 @@ router.post("/programs", homeProgramController.createHomeProgram);
 router.get("/programs", homeProgramController.getAllHomePrograms);
 router.get("/programs/id", homeProgramController.getSpecified);
 router.get(
-  "/programs/student/:studentName",
+  "/programs/student/:studentId",
   homeProgramController.getHomeProgramsByStudent
 );
 router.put("/programs/:id", homeProgramController.updateHomeProgram);

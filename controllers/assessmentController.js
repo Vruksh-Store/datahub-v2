@@ -36,7 +36,7 @@ exports.createAssessment = async (req, res) => {
 exports.getAssessments = async (req, res) => {
   try {
     const assessments = await assessmentService.getAssessments(
-      req.assessmentModel,
+      selectedAssessment,
       req.params.studentId
     );
     res.json(assessments);
@@ -46,21 +46,35 @@ exports.getAssessments = async (req, res) => {
 };
 
 exports.getAssessment = async (req, res) => {
+  const modelName = req.params.model;
+  const model = modelMap[modelName];
   try {
     const assessment = await assessmentService.getIndividualAssessment(
-      req.assessmentModel,
+      model,
       req.params.id
     );
     res.json(assessment);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
 
 exports.updateRecord = async (req, res) => {
+  console.log("Route accessed - getAssessment");
+  const modelName = req.params.model;
+  const model = modelMap[modelName];
+  console.log("Model name from params:", modelName);
+  console.log("ModelMap:", modelMap);
+  console.log("Selected model:", model, "Assessment ID:", req.params.id);
+
+  // Check if model exists in modelMap
+  if (!model) {
+    return res.status(400).json({ message: "Invalid assessment type!" });
+  }
   try {
     const result = await assessmentService.updateAssessmentRecord(
-      req.assessmentModel,
+      model,
       req.params.id,
       req.body
     );
@@ -75,6 +89,26 @@ exports.delAssessment = async (req, res) => {
     const result = await assessmentService.deleteAssessment(
       req.assessmentModel,
       req.params.id
+    );
+    res.status(200).json({ message: result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getCustomAssessmentsName = async (req, res) => {
+  try {
+    const result = await assessmentService.customAssessmentNames();
+    res.status(200).json({ message: result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getCustomAssessmentsQuestions = async (req, res) => {
+  try {
+    const result = await assessmentService.customAssessmentQuesions(
+      req.params.name
     );
     res.status(200).json({ message: result });
   } catch (error) {

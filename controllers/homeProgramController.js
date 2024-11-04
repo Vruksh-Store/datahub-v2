@@ -43,10 +43,12 @@ async function getHomeProgramsByStudent(req, res) {
 async function updateHomeProgram(req, res) {
   try {
     const { id } = req.params;
+    console.log(id, req.body);
     const updatedProgram = await homeProgramService.updateHomeProgram(
       id,
-      req.body
+      req.body.updatedExercises
     );
+    console.log("first", updatedProgram);
     res.status(200).json(updatedProgram);
   } catch (error) {
     res.status(500).json({ message: error.message });

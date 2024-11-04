@@ -38,6 +38,13 @@ async function getSpeechLanguage() {
   });
 }
 
+async function getCustom(name) {
+  return await Question.find({
+    branch: "vocational",
+    name: name,
+  });
+}
+
 async function getIndividualQ(id) {
   return await Question.findById(id);
 }
@@ -48,8 +55,11 @@ async function getIndividualQByTitle(data) {
   });
 }
 
-async function updateIndividualQuestion(id, data) {
-  return await Question.findByIdAndUpdate(id, data);
+async function updateIndividualQuestion(updates) {
+  const updatePromises = updates.map(({ id, data }) =>
+    Question.findByIdAndUpdate(id, { question: data.question })
+  );
+  return await Promise.all(updatePromises);
 }
 
 async function delQ(id) {
@@ -72,6 +82,7 @@ module.exports = {
   getVocational,
   getTemplateCase,
   getSpeechLanguage,
+  getCustom,
   getIndividualQ,
   getIndividualQByTitle,
   updateIndividualQuestion,
