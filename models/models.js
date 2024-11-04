@@ -216,6 +216,7 @@ const HomeProgramSchema = new mongoose.Schema({
         {
           name: { type: String, required: true },
           completed: { type: Boolean, default: false },
+          review: { type: String },
         },
       ],
     },
@@ -284,7 +285,14 @@ const QuestionSchema = new mongoose.Schema(
   {
     branch: {
       type: String,
-      enum: ["primary", "secondary", "vocational", "custom"],
+      enum: [
+        "primary",
+        "secondary",
+        "vocational",
+        "custom",
+        "templatecase",
+        "speechlanguage",
+      ],
       required: true,
     },
     name: {

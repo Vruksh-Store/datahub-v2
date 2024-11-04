@@ -26,6 +26,18 @@ async function getVocational() {
   });
 }
 
+async function getTemplateCase() {
+  return await Question.find({
+    branch: "templatecase",
+  });
+}
+
+async function getSpeechLanguage() {
+  return await Question.find({
+    branch: "speechlanguage",
+  });
+}
+
 async function getIndividualQ(id) {
   return await Question.findById(id);
 }
@@ -58,6 +70,8 @@ module.exports = {
   getPrimary,
   getSecondary,
   getVocational,
+  getTemplateCase,
+  getSpeechLanguage,
   getIndividualQ,
   getIndividualQByTitle,
   updateIndividualQuestion,

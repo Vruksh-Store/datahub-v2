@@ -4,6 +4,8 @@ const {
   SecondaryAssessment,
   VocationalAssessment,
   CustomAssessment,
+  TemplateCaseRecord,
+  SpeechLanguageProfile,
 } = require("../models/models");
 
 const modelMap = {
@@ -11,6 +13,8 @@ const modelMap = {
   SecondaryAssessment,
   VocationalAssessment,
   CustomAssessment,
+  TemplateCaseRecord,
+  SpeechLanguageProfile,
 };
 
 exports.createAssessment = async (req, res) => {

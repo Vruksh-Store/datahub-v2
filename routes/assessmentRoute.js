@@ -6,6 +6,8 @@ const checkIfExist = require("../middlewares/checkToken");
 const router = express.Router();
 
 // router.use(checkIfExist, setAssessmentModel);
+// need to change the above one ❌❌❌❌ during production and testing
+router.use(setAssessmentModel);
 
 // POST request
 router.post("/:model", assessmentController.createAssessment);
