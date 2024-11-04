@@ -36,7 +36,7 @@ exports.createAssessment = async (req, res) => {
 exports.getAssessments = async (req, res) => {
   try {
     const assessments = await assessmentService.getAssessments(
-      selectedAssessment,
+      req.assessmentModel,
       req.params.studentId
     );
     res.json(assessments);

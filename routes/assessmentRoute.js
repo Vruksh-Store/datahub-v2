@@ -14,6 +14,7 @@ router.post("/:model", assessmentController.createAssessment);
 
 // GET requests
 router.get("/student/:studentId", assessmentController.getAssessments);
+
 router.get("/:model/:id", assessmentController.getAssessment);
 
 // PUT request
