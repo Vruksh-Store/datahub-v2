@@ -52,7 +52,7 @@ async function customAssessmentNames() {
 }
 
 async function customAssessmentQuesions(name) {
-  const customQuestions = await Question.find({ branch: "custom", name : name });
+  const customQuestions = await Question.find({ branch: "custom", name: name });
 
   return customQuestions;
 }
@@ -64,5 +64,5 @@ module.exports = {
   updateAssessmentRecord,
   deleteAssessment,
   customAssessmentNames,
-  customAssessmentQuesions
+  customAssessmentQuesions,
 };

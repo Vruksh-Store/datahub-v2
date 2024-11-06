@@ -32,6 +32,7 @@ exports.getStudent = async (req, res) => {
 };
 
 exports.loginStudent = async (req, res) => {
+  console.log(req.body);
   try {
     const { name, password } = req.body;
     const student = await studentService.loginStudents(name, password);
@@ -39,7 +40,9 @@ exports.loginStudent = async (req, res) => {
     if (!student) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    res.status(200).json({ message: "Login successful", student });
+    res
+      .status(200)
+      .json({ message: "Login successful", student, userType: "parent" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

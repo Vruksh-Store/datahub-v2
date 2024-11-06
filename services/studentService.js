@@ -30,6 +30,7 @@ async function getIndividualStudent(id) {
 
 async function loginStudents(name, password) {
   const student = await Student.findOne({ name });
+
   if (student && (await bcrypt.compare(password, student.password))) {
     return student;
   }
