@@ -22,6 +22,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.get("/api/cron", async (req, res) => {
+  res
+    .json({
+      message: "Cron Waked",
+    })
+    .status(200);
+});
+
 app.use("/api/students", studentRoutes);
 
 // admin & staff route
