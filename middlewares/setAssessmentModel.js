@@ -5,6 +5,7 @@ const {
   CustomAssessment,
   TemplateCaseRecord,
   SpeechLanguageProfile,
+  PhysioTherapyAssessment,
 } = require("../models/models");
 
 const setAssessmentModel = (req, res, next) => {
@@ -18,6 +19,10 @@ const setAssessmentModel = (req, res, next) => {
       break;
     case "vocational-assessments":
       req.assessmentModel = VocationalAssessment;
+      break;
+    case "physiotherapy-assessments":
+      console.log("it is correct");
+      req.assessmentModel = PhysioTherapyAssessment;
       break;
     case "custom-assessments":
       req.assessmentModel = CustomAssessment;

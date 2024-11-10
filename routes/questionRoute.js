@@ -14,6 +14,10 @@ router.get("/allquestions", questionController.getAllQuestions);
 router.get("/primaryquestions", questionController.getPrimaryQuestions);
 router.get("/secondaryquestions", questionController.getSecondaryQuestions);
 router.get("/vocationalquestions", questionController.getVocationalQuestions);
+router.get(
+  "/physiotherapyquestions",
+  questionController.getPhysioTherapyQuestions
+);
 router.get("/templatecase", questionController.getTemplateCaseQuestions);
 router.get("/speechlanguage", questionController.getSpeechLanguageQuestions);
 router.get("/customquestions/:name", questionController.getCustomQuestions);

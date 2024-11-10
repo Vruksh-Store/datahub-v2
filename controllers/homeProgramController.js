@@ -31,9 +31,8 @@ async function getSpecified(req, res) {
 async function getHomeProgramsByStudent(req, res) {
   try {
     const { studentId } = req.params;
-    const programs = await homeProgramService.getHomeProgramsByStudent(
-      studentId
-    );
+    let programs = await homeProgramService.getHomeProgramsByStudent(studentId);
+    programs = programs.reverse();
     res.status(200).json(programs);
   } catch (error) {
     res.status(500).json({ message: error.message });

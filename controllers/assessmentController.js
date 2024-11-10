@@ -6,12 +6,14 @@ const {
   CustomAssessment,
   TemplateCaseRecord,
   SpeechLanguageProfile,
+  PhysioTherapyAssessment,
 } = require("../models/models");
 
 const modelMap = {
   PrimaryAssessment,
   SecondaryAssessment,
   VocationalAssessment,
+  PhysioTherapyAssessment,
   CustomAssessment,
   TemplateCaseRecord,
   SpeechLanguageProfile,
@@ -20,6 +22,7 @@ const modelMap = {
 exports.createAssessment = async (req, res) => {
   const modelName = req.params.model;
   const model = modelMap[modelName];
+  console.log(model);
 
   try {
     const assessment = await assessmentService.createAssessment(
@@ -39,6 +42,7 @@ exports.getAssessments = async (req, res) => {
       req.assessmentModel,
       req.params.studentId
     );
+    console.log(assessments);
     res.json(assessments);
   } catch (error) {
     res.status(500).json({ message: error.message });

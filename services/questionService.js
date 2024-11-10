@@ -38,6 +38,12 @@ async function getSpeechLanguage() {
   });
 }
 
+async function getPhysioTherapy() {
+  return await Question.find({
+    branch: "physiotherapy",
+  });
+}
+
 async function getCustom(name) {
   return await Question.find({
     branch: "vocational",
@@ -82,6 +88,7 @@ module.exports = {
   getVocational,
   getTemplateCase,
   getSpeechLanguage,
+  getPhysioTherapy,
   getCustom,
   getIndividualQ,
   getIndividualQByTitle,

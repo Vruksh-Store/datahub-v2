@@ -162,6 +162,41 @@ const VocationalAssessmentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const PhysioTherapyAssessmentSchema = new mongoose.Schema(
+  {
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
+    },
+    goal: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    review: {
+      type: String,
+    },
+    answers: [
+      {
+        questionId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Question",
+          required: true,
+        },
+        answer: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
 const CustomAssessmentSchema = new mongoose.Schema(
   {
     studentReference: {
@@ -209,6 +244,9 @@ const HomeProgramSchema = new mongoose.Schema(
       required: true,
     },
     name: {
+      type: String,
+    },
+    category: {
       type: String,
     },
     exercises: [
@@ -301,6 +339,7 @@ const QuestionSchema = new mongoose.Schema(
         "custom",
         "templatecase",
         "speechlanguage",
+        "physiotherapy",
       ],
       required: true,
     },
@@ -347,6 +386,11 @@ const VocationalAssessment = mongoose.model(
   VocationalAssessmentSchema
 );
 
+const PhysioTherapyAssessment = mongoose.model(
+  "PhysioTherapyAssessment",
+  PhysioTherapyAssessmentSchema
+);
+
 const CustomAssessment = mongoose.model(
   "CustomlAssessment",
   CustomAssessmentSchema
@@ -373,6 +417,7 @@ module.exports = {
   PrimaryAssessment,
   SecondaryAssessment,
   VocationalAssessment,
+  PhysioTherapyAssessment,
   CustomAssessment,
   TemplateCaseRecord,
   SpeechLanguageProfile,

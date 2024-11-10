@@ -17,7 +17,7 @@ router.put("/update/:id", studentController.updateStudents);
 router.delete("/:id", studentController.delStudent);
 // users side
 router.post("/login", studentController.loginStudent);
-router.post("/forget-password", studentController.forgetPassword);
+router.put("/forget-password", studentController.forgetPassword);
 
 router.get("/all-assessments/:id", studentController.getAllAssessments);
 

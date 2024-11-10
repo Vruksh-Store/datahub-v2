@@ -74,6 +74,15 @@ exports.getSpeechLanguageQuestions = async (req, res) => {
   }
 };
 
+exports.getPhysioTherapyQuestions = async (req, res) => {
+  try {
+    const primaryQs = await questionService.getPhysioTherapy();
+    res.status(200).json(primaryQs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.getIndividualQuestion = async (req, res) => {
   try {
     const indQuestion = await questionService.getIndividualQ(

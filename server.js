@@ -33,6 +33,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/primary-assessments", assessmentRoutes);
 app.use("/api/secondary-assessments", assessmentRoutes);
 app.use("/api/vocational-assessments", assessmentRoutes);
+app.use("/api/physiotherapy-assessments", assessmentRoutes);
 app.use("/api/custom-assessments", assessmentRoutes);
 
 // added a unique constrains to fix duplication data - only one child can have one template
