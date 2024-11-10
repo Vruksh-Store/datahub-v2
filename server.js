@@ -22,7 +22,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// student-rout
 app.use("/api/students", studentRoutes);
 
 // admin & staff route
