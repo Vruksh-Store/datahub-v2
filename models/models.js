@@ -243,10 +243,19 @@ const HomeProgramSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
+    },
     name: {
       type: String,
     },
     category: {
+      type: String,
+    },
+    review: {
       type: String,
     },
     exercises: [

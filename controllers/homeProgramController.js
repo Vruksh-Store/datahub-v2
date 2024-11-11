@@ -42,11 +42,19 @@ async function getHomeProgramsByStudent(req, res) {
 async function updateHomeProgram(req, res) {
   try {
     const { id } = req.params;
-    console.log(id, req.body);
-    const updatedProgram = await homeProgramService.updateHomeProgram(
-      id,
-      req.body.updatedExercises
-    );
+    const { updatedExercises, review } = req.body;
+    let updatedProgram;
+    if (updatedExercises) {
+      updatedProgram = await homeProgramService.updateHomeProgram(
+        id,
+        updatedExercises
+      );
+    } else {
+      updatedProgram = await homeProgramService.updateHomeProgramReview(
+        id,
+        review
+      );
+    }
     console.log("first", updatedProgram);
     res.status(200).json(updatedProgram);
   } catch (error) {

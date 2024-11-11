@@ -1,6 +1,7 @@
 const { HomeProgram } = require("../models/models");
 
 async function createHomeProgram(data) {
+  console.log(data);
   const homeProgram = new HomeProgram(data);
   return await homeProgram.save();
 }
@@ -27,6 +28,16 @@ async function updateHomeProgram(id, data) {
   return updatedHomeProgram;
 }
 
+async function updateHomeProgramReview(id, data) {
+  const updatedHomeProgram = await HomeProgram.findByIdAndUpdate(
+    id,
+    { review: data },
+    { new: true }
+  );
+
+  return updatedHomeProgram;
+}
+
 async function deleteHomeProgram(id) {
   return await HomeProgram.findByIdAndDelete(id);
 }
@@ -36,6 +47,7 @@ module.exports = {
   getAllHomePrograms,
   getHomeProgramsByStudent,
   updateHomeProgram,
+  updateHomeProgramReview,
   deleteHomeProgram,
   getSpecificProgram,
 };
