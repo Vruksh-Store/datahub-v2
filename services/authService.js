@@ -7,8 +7,9 @@ async function login(username, password) {
   let userType = "admin";
 
   if (!user) {
-    user = await Staff.findOne({ username });
-    userType = "staff";
+    let findUser = await Staff.findOne({ username });
+    userType = findUser.role;
+    user = findUser;
   }
 
   if (!user) {

@@ -51,7 +51,16 @@ const StaffSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ["teacher", "admin", "support"],
+      enum: [
+        "principle",
+        "specialEducator",
+        "headOfPhysioTherapist",
+        "physioTherapist",
+        "teacherAssistant",
+        "speechTherapist",
+        "occupationalAssistant",
+        "storesIncharge",
+      ],
     },
   },
   { timestamps: true }
