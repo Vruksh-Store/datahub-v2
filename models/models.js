@@ -37,10 +37,15 @@ const AdminSchema = new mongoose.Schema(
 
 const StaffSchema = new mongoose.Schema(
   {
-    username: {
+    userId: {
       type: String,
       required: true,
       unique: true,
+      maxlength: 30,
+    },
+    userName: {
+      type: String,
+      required: true,
       maxlength: 30,
     },
     password: {
@@ -60,8 +65,21 @@ const StaffSchema = new mongoose.Schema(
         "speechTherapist",
         "occupationalAssistant",
         "storesIncharge",
+        "vocationalAssistant",
+        "vocationalInstructor",
       ],
     },
+    students: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+      },
+    ],
+    assessments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+      },
+    ],
   },
   { timestamps: true }
 );
