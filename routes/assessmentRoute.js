@@ -16,6 +16,7 @@ router.post("/:model", assessmentController.createAssessment);
 router.get("/student/:studentId", assessmentController.getAssessments);
 
 router.get("/:model/:id", assessmentController.getAssessment);
+router.get("/latest/:model/:id", assessmentController.getLatestAssessment);
 
 // PUT request
 router.put("/update/:model/:id", assessmentController.updateRecord);
