@@ -42,7 +42,7 @@ async function getHomeProgramsByStudent(req, res) {
 async function updateHomeProgram(req, res) {
   try {
     const { id } = req.params;
-    const { updatedExercises, review } = req.body;
+    const { updatedExercises } = req.body;
     let updatedProgram;
     if (updatedExercises) {
       updatedProgram = await homeProgramService.updateHomeProgram(
@@ -52,7 +52,7 @@ async function updateHomeProgram(req, res) {
     } else {
       updatedProgram = await homeProgramService.updateHomeProgramReview(
         id,
-        review
+        req.body
       );
     }
     console.log("first", updatedProgram);

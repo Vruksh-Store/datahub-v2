@@ -267,6 +267,9 @@ const HomeProgramSchema = new mongoose.Schema(
     review: {
       type: String,
     },
+    reply: {
+      type: String,
+    },
     exercises: [
       {
         name: { type: String, required: true },
@@ -284,6 +287,9 @@ const HomeProgramSchema = new mongoose.Schema(
         ],
       },
     ],
+    remarks: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -383,6 +389,19 @@ const QuestionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const WorkSpaceSchema = new mongoose.Schema(
+  {
+    studentID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
+    space: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
+
 const Student = mongoose.model("Student", StudentSchema);
 
 const Admin = mongoose.model("Admin", AdminSchema);
@@ -428,6 +447,8 @@ const SpeechLanguageProfile = mongoose.model(
 
 const Question = mongoose.model("Question", QuestionSchema);
 
+const WorkSpace = mongoose.model("WorkSpaces", WorkSpaceSchema);
+
 module.exports = {
   Student,
   Admin,
@@ -441,4 +462,5 @@ module.exports = {
   SpeechLanguageProfile,
   Question,
   HomeProgram,
+  WorkSpace,
 };

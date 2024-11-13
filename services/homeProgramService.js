@@ -29,11 +29,28 @@ async function updateHomeProgram(id, data) {
 }
 
 async function updateHomeProgramReview(id, data) {
-  const updatedHomeProgram = await HomeProgram.findByIdAndUpdate(
-    id,
-    { review: data },
-    { new: true }
-  );
+  const { review, reply, remarks } = data;
+  console.log(review, reply, remarks);
+  let updatedHomeProgram;
+  if (review) {
+    updatedHomeProgram = await HomeProgram.findByIdAndUpdate(
+      id,
+      { review },
+      { new: true }
+    );
+  } else if (reply) {
+    updatedHomeProgram = await HomeProgram.findByIdAndUpdate(
+      id,
+      { reply },
+      { new: true }
+    );
+  } else {
+    updateHomeProgram = await HomeProgram.findByIdAndUpdate(
+      id,
+      { remarks },
+      { new: true }
+    );
+  }
 
   return updatedHomeProgram;
 }
