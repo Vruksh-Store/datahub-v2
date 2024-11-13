@@ -416,18 +416,40 @@ const QuestionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const WorkSpaceSchema = new mongoose.Schema(
-  {
-    studentID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
-    },
-    space: {
-      type: String,
-    },
+const WorkSpaceSchema = new mongoose.Schema({
+  studentReference: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Student",
+    required: true,
   },
-  { timestamps: true }
-);
+  noOfDays: {
+    type: Number,
+    required: true,
+  },
+  startDate: {
+    type: Date,
+  },
+  endDate: {
+    type: Date,
+  },
+  exercises: [
+    {
+      name: { type: String, required: true },
+      repetitions: [
+        {
+          date: {
+            type: Date,
+            required: true,
+          },
+          completed: Boolean,
+          feedback: {
+            type: String,
+          },
+        },
+      ],
+    },
+  ],
+});
 
 const Student = mongoose.model("Student", StudentSchema);
 
