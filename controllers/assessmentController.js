@@ -64,6 +64,21 @@ exports.getAssessment = async (req, res) => {
   }
 };
 
+exports.getLatestAssessment = async (req, res) => {
+  const modelName = req.params.model;
+  const model = modelMap[modelName];
+  try {
+    const assessment = await assessmentService.getLatestAssessment(
+      model,
+      req.params.id
+    );
+    res.json(assessment);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.updateRecord = async (req, res) => {
   console.log("Route accessed - getAssessment");
   const modelName = req.params.model;
@@ -82,8 +97,10 @@ exports.updateRecord = async (req, res) => {
       req.params.id,
       req.body
     );
+    console.log(result);
     res.status(200).json({ message: result });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

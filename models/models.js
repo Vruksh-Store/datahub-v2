@@ -196,6 +196,14 @@ const PhysioTherapyAssessmentSchema = new mongoose.Schema(
           ref: "Question",
           required: true,
         },
+        groupId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Question",
+        },
+        subGroupId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Question",
+        },
         answer: {
           type: String,
           required: true,
@@ -346,6 +354,21 @@ const SpeechLanguageProfileSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const SubgroupSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true, //tone
+  },
+});
+
+const GroupQuestionSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true, //right
+  },
+  subgroups: [SubgroupSchema],
+});
+
 const QuestionSchema = new mongoose.Schema(
   {
     branch: {
@@ -367,18 +390,22 @@ const QuestionSchema = new mongoose.Schema(
     },
     title: {
       type: String,
-      required: true,
+      required: true, //muscle group
     },
     question: {
       type: String,
-      required: true,
+      required: true, //Flexors
+    },
+    category: {
+      type: String, //Shoulder
     },
     type: {
       type: String,
-      enum: ["text", "multiple-choice", "boolean"],
+      enum: ["text", "multiple-choice", "boolean", "structured-table"],
       required: true,
     },
     options: [String],
+    groups: [GroupQuestionSchema], // right or left
   },
   { timestamps: true }
 );

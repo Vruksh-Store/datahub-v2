@@ -33,8 +33,23 @@ async function getIndividualAssessment(model, id) {
   return await model.findById(id).populate("answers.questionId");
 }
 
+async function getLatestAssessment(model, id) {
+  console.log(model);
+  console.log("Model Type:", typeof model);
+  console.log("Model:", model);
+  console.log("Model Name:", model.modelName);
+  console.log("Is Model a Mongoose Model?", !!model.schema);
+  return await model.findById(id);
+}
+
 async function updateAssessmentRecord(model, id, data) {
-  return await model.findByIdAndUpdate(id, data, { new: true });
+  console.log("fffff");
+  console.log(model, id);
+  return await model.findByIdAndUpdate(
+    id,
+    { answers: data.answers },
+    { new: true }
+  );
 }
 
 async function deleteAssessment(model, id) {
@@ -65,4 +80,5 @@ module.exports = {
   deleteAssessment,
   customAssessmentNames,
   customAssessmentQuesions,
+  getLatestAssessment,
 };
