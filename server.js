@@ -44,6 +44,8 @@ app.use("/api/vocational-assessments", assessmentRoutes);
 app.use("/api/physiotherapy-assessments", assessmentRoutes);
 app.use("/api/custom-assessments", assessmentRoutes);
 
+app.use("/api/all-assessments", assessmentRoutes);
+
 // added a unique constrains to fix duplication data - only one child can have one template
 // and speech profile - fixed ✅
 app.use("/api/templatecase", assessmentRoutes);

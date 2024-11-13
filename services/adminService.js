@@ -1,4 +1,4 @@
-const { Admin, Staff } = require("../models/models");
+const { Admin, Staff, Student } = require("../models/models");
 const bcrypt = require("bcrypt");
 
 async function createAdmin(data) {
@@ -30,7 +30,30 @@ async function deleteStaff(staffId) {
 }
 
 async function getStaffs() {
-  return await Staff.find();
+  return await Staff.find().populate({
+    path: "students",
+    select: "_id registerNo name level",
+  });
+}
+
+async function getStudents() {
+  return await Student.find().select("_id registerNo name level");
+}
+
+async function addStudents(staffId, studentId) {
+  return await Staff.findByIdAndUpdate(
+    { _id: staffId },
+    { $push: { students: studentId } },
+    { new: true }
+  );
+}
+
+async function removeStudents(staffId, studentId) {
+  return await Staff.findByIdAndUpdate(
+    { _id: staffId },
+    { $pull: { students: studentId } },
+    { new: true }
+  );
 }
 
 module.exports = {
@@ -39,4 +62,7 @@ module.exports = {
   updateStaff,
   deleteStaff,
   getStaffs,
+  getStudents,
+  addStudents,
+  removeStudents,
 };

@@ -8,5 +8,9 @@ router.post("/staff", adminController.createStaff);
 router.put("/staff/:id", adminController.updateStaff);
 router.delete("/staff/:id", adminController.deleteStaff);
 router.get("/staffs", adminController.getStaffs);
+//new
+router.get("/students", adminController.getStudents);
+router.put("/admin/staff/add-student", adminController.addStudents);
+router.put("/admin/staff/remove-student", adminController.removeStudents);
 
 module.exports = router;

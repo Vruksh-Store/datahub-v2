@@ -1,4 +1,4 @@
-const { Student, PhysioTherapyAssessment } = require("../models/models");
+const { Student, PhysioTherapyAssessment, Staff } = require("../models/models");
 const bcrypt = require("bcrypt");
 const {
   PrimaryAssessment,
@@ -184,6 +184,13 @@ const getAllAssessments = async (studentId) => {
   }
 };
 
+async function getUserStudents(id) {
+  return await Staff.find({ _id: id }).populate({
+    path: "students",
+    select: "_id registerNo name level",
+  });
+}
+
 module.exports = {
   createStudent,
   getStudents,
@@ -194,4 +201,5 @@ module.exports = {
   studentDelete,
   getIndividualStudent,
   getAllAssessments,
+  getUserStudents,
 };

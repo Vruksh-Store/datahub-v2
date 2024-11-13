@@ -126,3 +126,13 @@ exports.getAllAssessments = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getUserStudents = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const students = await studentService.getUserStudents(userId);
+    res.json({ message: students });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
