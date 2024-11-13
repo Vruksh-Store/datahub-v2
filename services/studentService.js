@@ -78,28 +78,42 @@ const getAllAssessments = async (studentId) => {
     // Fetch all assessments related to the student
     const primaryAssessments = await PrimaryAssessment.find({
       studentReference: studentId,
-    }).select("date _id goal review ");
+    })
+      .select("date _id goal review ")
+      .sort({ createdAt: -1 });
     const secondaryAssessments = await SecondaryAssessment.find({
       studentReference: studentId,
-    }).select("date _id goal review ");
+    })
+      .select("date _id goal review ")
+      .sort({ createdAt: -1 });
     const vocationalAssessments = await VocationalAssessment.find({
       studentReference: studentId,
-    }).select("date _id goal review ");
+    })
+      .select("date _id goal review ")
+      .sort({ createdAt: -1 });
     const physioTherapyAssessments = await PhysioTherapyAssessment.find({
       studentReference: studentId,
-    }).select("date _id goal review ");
+    })
+      .select("date _id goal review ")
+      .sort({ createdAt: -1 });
     const customAssessments = await CustomAssessment.find({
       studentReference: studentId,
     }).select("date _id goal review");
     const templateCaseRecords = await TemplateCaseRecord.find({
       studentReference: studentId,
-    }).select("date _id goal review ");
+    })
+      .select("date _id goal review ")
+      .sort({ createdAt: -1 });
     const speechLanguageProfiles = await SpeechLanguageProfile.find({
       studentReference: studentId,
-    }).select("date _id goal review ");
+    })
+      .select("date _id goal review ")
+      .sort({ createdAt: -1 });
     const homePrograms = await HomeProgram.find({
       studentReference: studentId,
-    }).select("date _id goal review ");
+    })
+      .select("date _id goal review ")
+      .sort({ createdAt: -1 });
 
     // Combine all assessments into a single array
     console.log(customAssessments);

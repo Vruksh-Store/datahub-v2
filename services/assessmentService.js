@@ -21,7 +21,9 @@ async function createAssessment(model, data) {
 }
 
 async function getAssessments(model, studentId) {
-  return await model.find({ studentReference: studentId });
+  return await model
+    .find({ studentReference: studentId })
+    
 }
 
 async function getIndividualAssessment(model, id) {
