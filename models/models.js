@@ -1,5 +1,20 @@
 const mongoose = require("mongoose");
 
+const activitySchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
+    activity: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
 const StudentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -102,6 +117,11 @@ const PrimaryAssessmentSchema = new mongoose.Schema(
     review: {
       type: String,
     },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     answers: [
       {
         questionId: {
@@ -136,6 +156,11 @@ const SecondaryAssessmentSchema = new mongoose.Schema(
     },
     review: {
       type: String,
+    },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
@@ -172,6 +197,11 @@ const VocationalAssessmentSchema = new mongoose.Schema(
     review: {
       type: String,
     },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     answers: [
       {
         questionId: {
@@ -206,6 +236,11 @@ const PhysioTherapyAssessmentSchema = new mongoose.Schema(
     },
     review: {
       type: String,
+    },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
@@ -249,6 +284,11 @@ const CustomAssessmentSchema = new mongoose.Schema(
     },
     review: {
       type: String,
+    },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
@@ -296,6 +336,11 @@ const HomeProgramSchema = new mongoose.Schema(
     reply: {
       type: String,
     },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     exercises: [
       {
         name: { type: String, required: true },
@@ -335,6 +380,11 @@ const TemplateCaseRecordSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     answers: [
       {
         questionId: {
@@ -363,6 +413,11 @@ const SpeechLanguageProfileSchema = new mongoose.Schema(
     date: {
       type: Date,
       default: Date.now,
+    },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
@@ -519,6 +574,8 @@ const Question = mongoose.model("Question", QuestionSchema);
 
 const WorkSpace = mongoose.model("WorkSpaces", WorkSpaceSchema);
 
+const Activity = mongoose.model("Activity", activitySchema);
+
 module.exports = {
   Student,
   Admin,
@@ -533,4 +590,5 @@ module.exports = {
   Question,
   HomeProgram,
   WorkSpace,
+  Activity,
 };

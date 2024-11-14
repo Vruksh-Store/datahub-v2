@@ -11,8 +11,7 @@ const cors = require("cors");
 const customAssessmentRoutes = require("./routes/customAssessmentRoute.js");
 const dashboardRoutes = require("./routes/dashboard.js");
 const workspaceRoutes = require("./routes/workSpaceRoute.js");
-const staff = require("./data/staff.js");
-const { Staff } = require("./models/models.js");
+const activityRoutes = require("./routes/activity.js");
 
 dotenv.config();
 
@@ -75,6 +74,9 @@ app.use("/api/workspace", workspaceRoutes);
 
 //dashboard
 app.use("/api/dashboard", dashboardRoutes);
+
+//activity
+app.use("/api/activity", activityRoutes);
 
 console.log(process.env.MONGO_URI);
 const connectDB = async () => {
