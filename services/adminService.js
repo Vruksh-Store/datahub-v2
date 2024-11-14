@@ -9,6 +9,7 @@ async function createAdmin(data) {
 }
 
 async function createStaff(data) {
+  console.log(data)
   const salt = await bcrypt.genSalt(5);
   data.password = await bcrypt.hash(data.password, salt);
 

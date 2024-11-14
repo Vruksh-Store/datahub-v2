@@ -42,12 +42,19 @@ async function getHomeProgramsByStudent(req, res) {
 async function updateHomeProgram(req, res) {
   try {
     const { id } = req.params;
-    const { updatedExercises } = req.body;
+    const { updatedExercises, editing } = req.body;
     let updatedProgram;
-    if (updatedExercises) {
+    if (updatedExercises && !editing) {
+      console.log("control reacher");
       updatedProgram = await homeProgramService.updateHomeProgram(
         id,
         updatedExercises
+      );
+    } else if (editing) {
+      console.log(req.body);
+      updatedProgram = await homeProgramService.updateHomeProgramFull(
+        id,
+        req.body
       );
     } else {
       updatedProgram = await homeProgramService.updateHomeProgramReview(

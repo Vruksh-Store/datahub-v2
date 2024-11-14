@@ -309,6 +309,9 @@ const HomeProgramSchema = new mongoose.Schema(
             feedback: {
               type: String,
             },
+            color: {
+              type: String,
+            },
           },
         ],
       },

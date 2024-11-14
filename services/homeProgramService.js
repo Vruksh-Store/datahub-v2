@@ -28,6 +28,15 @@ async function updateHomeProgram(id, data) {
   return updatedHomeProgram;
 }
 
+async function updateHomeProgramFull(id, data) {
+  const updatedHomeProgramF = await HomeProgram.findByIdAndUpdate(
+    id,
+    { $set: data },
+    { new: true }
+  );
+  return updatedHomeProgramF;
+}
+
 async function updateHomeProgramReview(id, data) {
   const { review, reply, remarks } = data;
   console.log(review, reply, remarks);
@@ -67,4 +76,5 @@ module.exports = {
   updateHomeProgramReview,
   deleteHomeProgram,
   getSpecificProgram,
+  updateHomeProgramFull,
 };
