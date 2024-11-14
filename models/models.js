@@ -122,8 +122,13 @@ const PrimaryAssessmentSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     answers: [
       {
@@ -162,8 +167,13 @@ const SecondaryAssessmentSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     answers: [
       {
@@ -202,8 +212,13 @@ const VocationalAssessmentSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     answers: [
       {
@@ -242,8 +257,13 @@ const PhysioTherapyAssessmentSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     answers: [
       {
@@ -290,8 +310,13 @@ const CustomAssessmentSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     answers: [
       {
@@ -341,8 +366,13 @@ const HomeProgramSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     exercises: [
       {
@@ -385,8 +415,13 @@ const TemplateCaseRecordSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     answers: [
       {
@@ -419,8 +454,13 @@ const SpeechLanguageProfileSchema = new mongoose.Schema(
     },
     staffReference: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Staff",
       required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
     },
     answers: [
       {
