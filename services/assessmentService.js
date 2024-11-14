@@ -1,4 +1,12 @@
-const { Student, Question } = require("../models/models");
+const {
+  Student,
+  Question,
+  HomeProgram,
+  PhysioTherapyAssessment,
+  PrimaryAssessment,
+  SecondaryAssessment,
+  VocationalAssessment,
+} = require("../models/models");
 
 async function createAssessment(model, data) {
   console.log(model, data);
@@ -21,9 +29,7 @@ async function createAssessment(model, data) {
 }
 
 async function getAssessments(model, studentId) {
-  return await model
-    .find({ studentReference: studentId })
-    
+  return await model.find({ studentReference: studentId });
 }
 
 async function getIndividualAssessment(model, id) {
@@ -74,6 +80,75 @@ async function customAssessmentQuesions(name) {
   return customQuestions;
 }
 
+// Route to get all students who have completed different types of assessments
+async function getDifferentAssessments() {
+  try {
+    // Helper function to map assessment data and avoid duplicates
+    const mapUniqueStudents = (assessmentData) => {
+      const uniqueStudents = new Map();
+      assessmentData.forEach((assessment) => {
+        const student = assessment.studentReference;
+        if (!uniqueStudents.has(student._id.toString())) {
+          uniqueStudents.set(student._id.toString(), {
+            _id: student._id,
+            name: student.name,
+            registerNo: student.registerNo,
+            level: student.level,
+          });
+        }
+      });
+      return Array.from(uniqueStudents.values());
+    };
+
+    // Fetch and process each assessment type
+    const primaryAssessmentStudents = await PrimaryAssessment.find()
+      .select("studentReference")
+      .populate("studentReference", "_id name registerNo level")
+      .exec();
+    const primaryStudents = mapUniqueStudents(primaryAssessmentStudents);
+
+    const secondaryAssessmentStudents = await SecondaryAssessment.find()
+      .select("studentReference")
+      .populate("studentReference", "_id name registerNo level")
+      .exec();
+    const secondaryStudents = mapUniqueStudents(secondaryAssessmentStudents);
+
+    const vocationalAssessmentStudents = await VocationalAssessment.find()
+      .select("studentReference")
+      .populate("studentReference", "_id name registerNo level")
+      .exec();
+    const vocationalStudents = mapUniqueStudents(vocationalAssessmentStudents);
+
+    const physiotherapyAssessmentStudents = await PhysioTherapyAssessment.find()
+      .select("studentReference")
+      .populate("studentReference", "_id name registerNo level")
+      .exec();
+    const physiotherapyStudents = mapUniqueStudents(
+      physiotherapyAssessmentStudents
+    );
+
+    const homePrograms = await HomeProgram.find()
+      .select("studentReference")
+      .populate("studentReference", "_id name registerNo level")
+      .exec();
+    const homeProgramStudents = mapUniqueStudents(homePrograms);
+
+    // Structure the response as requested
+    const response = {
+      primary: primaryStudents,
+      secondary: secondaryStudents,
+      vocational: vocationalStudents,
+      physiotherapy: physiotherapyStudents,
+      homeProgram: homeProgramStudents,
+    };
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching assessed students:", error);
+    throw new Error("Failed to fetch assessment data");
+  }
+}
+
 module.exports = {
   createAssessment,
   getAssessments,
@@ -83,4 +158,5 @@ module.exports = {
   customAssessmentNames,
   customAssessmentQuesions,
   getLatestAssessment,
+  getDifferentAssessments,
 };

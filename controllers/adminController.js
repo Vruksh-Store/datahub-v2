@@ -48,10 +48,48 @@ async function getStaffs(req, res) {
   }
 }
 
+async function getStudents(req, res) {
+  try {
+    const students = await adminService.getStudents();
+    res.json(students);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+async function addStudents(req, res) {
+  console.log(1);
+  const staffId = req.body.staffId;
+  const studentId = req.body.studentId;
+  try {
+    const response = await adminService.addStudents(staffId, studentId);
+    console.log(response);
+    res.json(response);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+async function removeStudents(req, res) {
+  console.log(3);
+  const staffId = req.body.staffId;
+  const studentId = req.body.studentId;
+  try {
+    const response = await adminService.removeStudents(staffId, studentId);
+    console.log(response);
+    res.json(response);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
 module.exports = {
   createAdmin,
   createStaff,
   updateStaff,
   deleteStaff,
   getStaffs,
+  getStudents,
+  addStudents,
+  removeStudents
 };

@@ -5,6 +5,10 @@ const checkIfExist = require("../middlewares/checkToken");
 
 const router = express.Router();
 
+router.get(
+  "/all/get/c/get-different-assessments",
+  assessmentController.getDifferentAssessments
+);
 // router.use(checkIfExist, setAssessmentModel);
 // need to change the above one ❌❌❌❌ during production and testing
 router.use(setAssessmentModel);

@@ -136,3 +136,12 @@ exports.getCustomAssessmentsQuestions = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getDifferentAssessments = async (req, res) => {
+  try {
+    const result = await assessmentService.getDifferentAssessments();
+    res.status(200).json({ message: result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
