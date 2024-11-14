@@ -9,6 +9,19 @@ async function createActivity(req, res) {
   }
 }
 
+async function getActivities(req, res) {
+  try {
+    const activities = await activityService.getActivities(
+      req.params.admin,
+      req.params.userId
+    );
+    res.status(201).json(activities);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
 module.exports = {
   createActivity,
+  getActivities,
 };

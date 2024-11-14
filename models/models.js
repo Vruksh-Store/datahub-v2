@@ -7,6 +7,9 @@ const activitySchema = new mongoose.Schema(
       ref: "Staff",
       required: true,
     },
+    userName: {
+      type: String,
+    },
     activity: {
       type: String,
       required: true,
