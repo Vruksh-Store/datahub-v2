@@ -102,6 +102,11 @@ const PrimaryAssessmentSchema = new mongoose.Schema(
     review: {
       type: String,
     },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     answers: [
       {
         questionId: {
@@ -136,6 +141,11 @@ const SecondaryAssessmentSchema = new mongoose.Schema(
     },
     review: {
       type: String,
+    },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
@@ -172,6 +182,11 @@ const VocationalAssessmentSchema = new mongoose.Schema(
     review: {
       type: String,
     },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     answers: [
       {
         questionId: {
@@ -206,6 +221,11 @@ const PhysioTherapyAssessmentSchema = new mongoose.Schema(
     },
     review: {
       type: String,
+    },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
@@ -249,6 +269,11 @@ const CustomAssessmentSchema = new mongoose.Schema(
     },
     review: {
       type: String,
+    },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
@@ -296,6 +321,11 @@ const HomeProgramSchema = new mongoose.Schema(
     reply: {
       type: String,
     },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     exercises: [
       {
         name: { type: String, required: true },
@@ -332,6 +362,11 @@ const TemplateCaseRecordSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
+    },
     answers: [
       {
         questionId: {
@@ -360,6 +395,11 @@ const SpeechLanguageProfileSchema = new mongoose.Schema(
     date: {
       type: Date,
       default: Date.now,
+    },
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+      required: true,
     },
     answers: [
       {
