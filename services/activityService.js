@@ -7,7 +7,7 @@ async function createActivity(data) {
 
 const getActivities = async (admin, userId) => {
   try {
-    if (admin === true) {
+    if (admin) {
       const allActivities = await Activity.find().sort({ createdAt: -1 });
 
       const adminActivities = allActivities.filter(

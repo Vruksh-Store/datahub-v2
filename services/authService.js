@@ -3,19 +3,24 @@ const { Admin, Staff } = require("../models/models");
 const bcrypt = require("bcrypt");
 
 async function login(username, password) {
+  console.log(username);
   let user = await Admin.findOne({ username });
   let userType = "admin";
 
   if (!user) {
-    let findUser = await Staff.findOne({ username });
+    console.log(1);
+    let findUser = await Staff.findOne({ userId: username });
+    console.log(findUser);
     userType = findUser.role;
     user = findUser;
   }
-
+  console.log("first");
   if (!user) {
+    console.log(2);
     throw new Error("User not found");
   }
 
+  console.log(user);
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     throw new Error("Invalid credentials");
