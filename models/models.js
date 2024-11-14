@@ -57,8 +57,8 @@ const StaffSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
-      // required: true,
-      // unique: true,
+      required: true,
+      unique: true,
       maxlength: 30,
     },
     userName: {
@@ -85,6 +85,7 @@ const StaffSchema = new mongoose.Schema(
         "storesIncharge",
         "vocationalAssistant",
         "vocationalInstructor",
+        
       ],
     },
     students: [
@@ -535,40 +536,7 @@ const QuestionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const WorkSpaceSchema = new mongoose.Schema({
-  studentReference: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Student",
-    required: true,
-  },
-  noOfDays: {
-    type: Number,
-    required: true,
-  },
-  startDate: {
-    type: Date,
-  },
-  endDate: {
-    type: Date,
-  },
-  exercises: [
-    {
-      name: { type: String, required: true },
-      repetitions: [
-        {
-          date: {
-            type: Date,
-            required: true,
-          },
-          completed: Boolean,
-          feedback: {
-            type: String,
-          },
-        },
-      ],
-    },
-  ],
-});
+
 
 const Student = mongoose.model("Student", StudentSchema);
 
@@ -615,7 +583,6 @@ const SpeechLanguageProfile = mongoose.model(
 
 const Question = mongoose.model("Question", QuestionSchema);
 
-const WorkSpace = mongoose.model("WorkSpaces", WorkSpaceSchema);
 
 const Activity = mongoose.model("Activity", activitySchema);
 
@@ -632,6 +599,5 @@ module.exports = {
   SpeechLanguageProfile,
   Question,
   HomeProgram,
-  WorkSpace,
   Activity,
 };

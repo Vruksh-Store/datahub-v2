@@ -10,7 +10,6 @@ const homeProgramRoutes = require("./routes/homeProgramRoute.js");
 const cors = require("cors");
 const customAssessmentRoutes = require("./routes/customAssessmentRoute.js");
 const dashboardRoutes = require("./routes/dashboard.js");
-const workspaceRoutes = require("./routes/workSpaceRoute.js");
 const activityRoutes = require("./routes/activity.js");
 
 dotenv.config();
@@ -69,8 +68,6 @@ app.use("/api/questions", questionRoutes);
 app.use("/api/home", homeProgramRoutes);
 
 app.use("/api/custom", customAssessmentRoutes);
-
-app.use("/api/workspace", workspaceRoutes);
 
 //dashboard
 app.use("/api/dashboard", dashboardRoutes);
