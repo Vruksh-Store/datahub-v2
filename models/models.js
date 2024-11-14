@@ -39,13 +39,13 @@ const StaffSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
-      required: true,
-      unique: true,
+      // required: true,
+      // unique: true,
       maxlength: 30,
     },
     userName: {
       type: String,
-      required: true,
+      // required: true,
       maxlength: 30,
     },
     password: {

@@ -9,7 +9,7 @@ const staff = [
   },
   {
     userId: "102",
-    userName: "NAVANEETHAM. S.",
+    userName: "NAVANEETHAM S.",
     password: "29121969", // DOB in DDMMYYYY format
     role: "teacherAssistant", // Role in camel case
     students: [],

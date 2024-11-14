@@ -11,6 +11,8 @@ const cors = require("cors");
 const customAssessmentRoutes = require("./routes/customAssessmentRoute.js");
 const dashboardRoutes = require("./routes/dashboard.js");
 const workspaceRoutes = require("./routes/workSpaceRoute.js");
+const staff = require("./data/staff.js");
+const { Staff } = require("./models/models.js");
 
 dotenv.config();
 
@@ -32,6 +34,16 @@ app.get("/api/cron", async (req, res) => {
 });
 
 app.use("/api/students", studentRoutes);
+
+app.get("/load", async (req, res) => {
+  try {
+    const result = await Staff.insertMany(staff);
+    res.json(result);
+  } catch (error) {
+    console.log(error.message);
+    res.json({ msg: error.message });
+  }
+});
 
 // admin & staff route
 app.use("/api/admin", adminRoutes);
