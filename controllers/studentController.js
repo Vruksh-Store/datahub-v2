@@ -84,13 +84,15 @@ exports.updateFee = async (req, res) => {
 
 exports.updateStudents = async (req, res) => {
   const id = req.params.id;
-  const { name, phone, level, registerNo } = req.body;
+  const { name, phone, level, registerNo, gender, password } = req.body;
   const updateStudent = await studentService.studentUpdate(
     id,
     name,
     phone,
     level,
-    registerNo
+    registerNo,
+    gender,
+    password
   );
   if (!updateStudent) {
     res.status(400).json({ message: "student is not updated with given id" });

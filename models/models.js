@@ -24,7 +24,66 @@ const StudentSchema = new mongoose.Schema(
     registerNo: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     level: { type: String, required: true },
-    phone: { type: Number, required: true, unique: true, maxLength: 10 },
+    phone: { type: Number, required: true, maxLength: 10 },
+    gender: {
+      type: String,
+      enum: ["male", "female"],
+      required: true,
+    },
+    profilePic: {
+      type: String,
+    },
+    photos: [
+      {
+        url: {
+          type: String,
+        },
+      },
+    ],
+    growthAndDevelopment: [
+      {
+        weight: [
+          {
+            date: {
+              type: Date,
+            },
+            data: {
+              type: String,
+            },
+          },
+        ],
+        height: [
+          {
+            date: {
+              type: Date,
+            },
+            data: {
+              type: String,
+            },
+          },
+        ],
+        medications: [
+          {
+            name: {
+              type: Date,
+            },
+            dosage: {
+              type: String,
+            },
+          },
+        ],
+        bovelAndSleepHabbits: [
+          {
+            date: {
+              type: Date,
+            },
+            data: {
+              type: String,
+            },
+          },
+        ],
+      },
+    ],
     fees: [
       {
         date: { type: Date },
@@ -85,7 +144,6 @@ const StaffSchema = new mongoose.Schema(
         "storesIncharge",
         "vocationalAssistant",
         "vocationalInstructor",
-        
       ],
     },
     students: [
@@ -536,8 +594,6 @@ const QuestionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-
 const Student = mongoose.model("Student", StudentSchema);
 
 const Admin = mongoose.model("Admin", AdminSchema);
@@ -582,7 +638,6 @@ const SpeechLanguageProfile = mongoose.model(
 );
 
 const Question = mongoose.model("Question", QuestionSchema);
-
 
 const Activity = mongoose.model("Activity", activitySchema);
 
