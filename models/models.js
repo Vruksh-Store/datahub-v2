@@ -25,6 +25,65 @@ const StudentSchema = new mongoose.Schema(
     password: { type: String, required: true },
     level: { type: String, required: true },
     phone: { type: Number, required: true, maxLength: 10 },
+    gender: {
+      type: String,
+      enum: ["male", "female"],
+      required: true,
+    },
+    profilePic: {
+      type: String,
+    },
+    photos: [
+      {
+        url: {
+          type: String,
+        },
+      },
+    ],
+    growthAndDevelopment: [
+      {
+        weight: [
+          {
+            date: {
+              type: Date,
+            },
+            data: {
+              type: String,
+            },
+          },
+        ],
+        height: [
+          {
+            date: {
+              type: Date,
+            },
+            data: {
+              type: String,
+            },
+          },
+        ],
+        medications: [
+          {
+            name: {
+              type: Date,
+            },
+            dosage: {
+              type: String,
+            },
+          },
+        ],
+        bovelAndSleepHabbits: [
+          {
+            date: {
+              type: Date,
+            },
+            data: {
+              type: String,
+            },
+          },
+        ],
+      },
+    ],
     fees: [
       {
         date: { type: Date },

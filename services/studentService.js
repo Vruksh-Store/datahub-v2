@@ -21,7 +21,7 @@ async function createStudent(studentData) {
 }
 
 async function getStudents() {
-  return await Student.find();
+  return await Student.find({}, { password: 0 });
 }
 
 async function getIndividualStudent(id) {
@@ -60,12 +60,23 @@ async function feesUpdate(studentId, date, amount) {
   );
 }
 
-async function studentUpdate(id, name, phone, level, registerNo) {
-  return await Student.findByIdAndUpdate(
-    id,
-    { name, phone, level, registerNo },
-    { new: true }
-  );
+async function studentUpdate(
+  id,
+  name,
+  phone,
+  level,
+  registerNo,
+  gender,
+  newPassword
+) {
+  let updateData = { name, phone, level, registerNo, gender };
+
+  if (newPassword) {
+    const saltRounds = 5;
+    updateData.password = await bcrypt.hash(newPassword, saltRounds);
+  }
+
+  return await Student.findByIdAndUpdate(id, updateData, { new: true });
 }
 
 async function studentDelete(id) {
@@ -274,7 +285,7 @@ const getAllAssessments = async (studentId) => {
 async function getUserStudents(id) {
   return await Staff.find({ _id: id }).populate({
     path: "students",
-    select: "_id registerNo name level",
+    select: "_id registerNo name level gender phone",
   });
 }
 

@@ -11,7 +11,8 @@ const cors = require("cors");
 const customAssessmentRoutes = require("./routes/customAssessmentRoute.js");
 const dashboardRoutes = require("./routes/dashboard.js");
 const activityRoutes = require("./routes/activity.js");
-
+const students = require("./data/students.js");
+const studentService = require("./services/studentService.js");
 dotenv.config();
 
 const app = express();
@@ -91,5 +92,15 @@ const connectDB = async () => {
 
 connectDB();
 
+// mongoose.connection.on("open", async () => {
+//   try {
+//     for (let student of students) {
+//       await studentService.createStudent(student);
+//     }
+//     console.log("done bha");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
