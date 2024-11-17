@@ -13,7 +13,7 @@ const dashboardRoutes = require("./routes/dashboard.js");
 const activityRoutes = require("./routes/activity.js");
 const students = require("./data/students.js");
 const studentService = require("./services/studentService.js");
-
+;
 const workSpaceRoutes = require("./routes/workSpaceRoute.js");
 
 dotenv.config();
@@ -57,6 +57,7 @@ app.use("/api/secondary-assessments", assessmentRoutes);
 app.use("/api/vocational-assessments", assessmentRoutes);
 app.use("/api/physiotherapy-assessments", assessmentRoutes);
 app.use("/api/custom-assessments", assessmentRoutes);
+app.use("/api/selfhelp-assessments", assessmentRoutes);
 
 app.use("/api/all-assessments", assessmentRoutes);
 
@@ -163,9 +164,19 @@ connectDB();
 
 // mongoose.connection.on("open", async () => {
 //   try {
-//     for (let student of students) {
-//       await studentService.createStudent(student);
-//     }
+//     await Question.insertMany(primary);
+//     console.log("done bha");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+// mongoose.connection.on("open", async () => {
+//   try {
+//     await Question.updateMany(
+//       { default: { $exists: false } }, // Check if the field does not exist
+//       { $set: { default: "" } } // Set reasonBox to false
+//     );
 //     console.log("done bha");
 //   } catch (error) {
 //     console.log(error);

@@ -13,6 +13,7 @@ router.get("/titles", questionController.getTitles);
 
 // get reqs
 router.get("/allquestions", questionController.getAllQuestions);
+router.get("/selfhelpquestions", questionController.getSelfHelpSkillQuestions);
 router.get("/primaryquestions", questionController.getPrimaryQuestions);
 router.get("/secondaryquestions", questionController.getSecondaryQuestions);
 router.get("/vocationalquestions", questionController.getVocationalQuestions);

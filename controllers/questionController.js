@@ -6,6 +6,7 @@ exports.createQuestion = async (req, res) => {
     const question = await questionService.createQuestion(req.body);
     res.status(201).json(question);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -22,6 +23,15 @@ exports.getAllQuestions = async (req, res) => {
 exports.getPrimaryQuestions = async (req, res) => {
   try {
     const primaryQs = await questionService.getPrimary();
+    res.status(200).json(primaryQs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getSelfHelpSkillQuestions = async (req, res) => {
+  try {
+    const primaryQs = await questionService.getSelfHelpSkillQuesions();
     res.status(200).json(primaryQs);
   } catch (error) {
     res.status(500).json({ message: error.message });

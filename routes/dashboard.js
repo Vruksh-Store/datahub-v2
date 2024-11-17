@@ -22,31 +22,110 @@ router.get("/", async (req, res) => {
     // Get total students
     const totalStudents = await Student.countDocuments();
 
+    console.log("Total Students:", totalStudents);
+
     // Get students by level
     const studentsByLevel = await Student.aggregate([
       {
         $group: {
-          _id: "$level",
-          count: { $sum: 1 },
+          _id: "$level", // Group by the 'level' field
+          count: { $sum: 1 }, // Count the number of students in each level
+        },
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the '_id' field from the output
+          label: "$_id", // Rename '_id' field to 'label'
+          value: "$count", // Rename 'count' field to 'value'
         },
       },
     ]);
+
+    // Get gender count by level
+    const genderCountByLevel = await Student.aggregate([
+      {
+        $group: {
+          _id: { level: "$level", gender: "$gender" }, // Group by both level and gender
+          count: { $sum: 1 }, // Count the number of students in each gender at each level
+        },
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the '_id' field from the output
+          level: "$_id.level", // Extract 'level' from '_id'
+          gender: "$_id.gender", // Extract 'gender' from '_id'
+          count: 1, // Keep the count
+        },
+      },
+      {
+        $group: {
+          _id: "$level", // Group by level again to merge male and female counts per level
+          maleCount: {
+            $sum: {
+              $cond: [{ $eq: ["$gender", "male"] }, "$count", 0], // Sum count where gender is male
+            },
+          },
+          femaleCount: {
+            $sum: {
+              $cond: [{ $eq: ["$gender", "female"] }, "$count", 0], // Sum count where gender is female
+            },
+          },
+        },
+      },
+      {
+        $sort: {
+          _id: 1, // Sort alphabetically (could be redundant but can be useful for debugging)
+        },
+      },
+      {
+        $project: {
+          level: 1,
+          maleCount: 1,
+          femaleCount: 1,
+        },
+      },
+    ]);
+
+    // Now we ensure the specific order for levels: pre-primary, primary, secondary, pre-vocational, vocational
+    const levelOrder = [
+      "pre-primary",
+      "primary",
+      "secondary",
+      "pre-vocational",
+      "vocational",
+    ];
+
+    // Ensure the data is arranged according to the `levelOrder` array
+    const sortedGenderCountByLevel = levelOrder.map((level) => {
+      // Find the corresponding data for the current level
+      const levelData = genderCountByLevel.find((item) => item._id === level);
+
+      // If data is found for the level, use it, otherwise default to 0 for counts
+      return {
+        level: level,
+        maleCount: levelData ? levelData.maleCount : 0,
+        femaleCount: levelData ? levelData.femaleCount : 0,
+      };
+    });
+
+    console.log("Sorted Gender Count by Level:", sortedGenderCountByLevel);
 
     // Generate charts or images for the dashboard
     const totalStudentsImage = await createChart(
       totalStudents,
       "Total Students"
     );
-    const studentsByLevelImage = await createChart(
-      studentsByLevel,
-      "Students by Level"
+    const genderChart = await createChart(
+      sortedGenderCountByLevel,
+      "Male & Female students by Level"
     );
 
-    console.log(totalStudentsImage);
-    console.log(studentsByLevelImage);
+    // Send the data and charts to the front-end
     res.json({
       totalStudents: totalStudentsImage,
-      studentsByLevel: studentsByLevelImage,
+      studentsByLevel,
+      genderCountByLevel: sortedGenderCountByLevel, // Send the sorted gender data
+      genderChart,
     });
   } catch (error) {
     console.error("Error fetching dashboard data:", error);
