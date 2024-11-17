@@ -255,8 +255,8 @@ const PrimaryAssessmentSchema = new mongoose.Schema(
           required: true,
         },
         reason: {
-          type: String
-        }
+          type: String,
+        },
       },
     ],
   },
@@ -444,6 +444,9 @@ const CustomAssessmentSchema = new mongoose.Schema(
         answer: {
           type: String,
           required: true,
+        },
+        reason: {
+          type: String,
         },
       },
     ],
