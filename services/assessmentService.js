@@ -9,6 +9,7 @@ const {
 } = require("../models/models");
 
 async function createAssessment(model, data) {
+  console.log("dddd");
   console.log(model, data);
   console.log("Model Type:", typeof model);
   console.log("Model:", model);

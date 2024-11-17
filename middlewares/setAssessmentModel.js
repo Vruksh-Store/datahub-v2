@@ -6,6 +6,7 @@ const {
   TemplateCaseRecord,
   SpeechLanguageProfile,
   PhysioTherapyAssessment,
+  SelfHelpSkillAssessment,
 } = require("../models/models");
 
 const setAssessmentModel = (req, res, next) => {
@@ -13,6 +14,9 @@ const setAssessmentModel = (req, res, next) => {
   switch (assessmentType) {
     case "primary-assessments":
       req.assessmentModel = PrimaryAssessment;
+      break;
+    case "selfhelp-assessments":
+      req.assessmentModel = SelfHelpSkillAssessment;
       break;
     case "secondary-assessments":
       req.assessmentModel = SecondaryAssessment;

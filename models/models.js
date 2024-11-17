@@ -134,7 +134,7 @@ const StaffSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: [
-        "principle",
+        "principal",
         "specialEducator",
         "headOfPhysioTherapist",
         "physioTherapist",
@@ -155,6 +155,51 @@ const StaffSchema = new mongoose.Schema(
     assessments: [
       {
         type: mongoose.Schema.Types.ObjectId,
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+const SelfHelpSkillAssessmentSchema = new mongoose.Schema(
+  {
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
+    },
+    goal: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    review: {
+      type: String,
+    },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "Admin"],
+    },
+    answers: [
+      {
+        questionId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Question",
+          required: true,
+        },
+        answer: {
+          type: String,
+          required: true,
+        },
       },
     ],
   },
@@ -200,6 +245,9 @@ const PrimaryAssessmentSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        reason: {
+          type: String
+        }
       },
     ],
   },
@@ -493,6 +541,9 @@ const TemplateCaseRecordSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        reason: {
+          type: String,
+        },
       },
     ],
   },
@@ -558,6 +609,7 @@ const QuestionSchema = new mongoose.Schema(
     branch: {
       type: String,
       enum: [
+        "selfhelp",
         "primary",
         "secondary",
         "vocational",
@@ -588,6 +640,12 @@ const QuestionSchema = new mongoose.Schema(
       enum: ["text", "multiple-choice", "boolean", "structured-table"],
       required: true,
     },
+    reasonBox: {
+      type: Boolean,
+    },
+    default: {
+      type: String,
+    },
     options: [String],
     groups: [GroupQuestionSchema], // right or left
   },
@@ -603,6 +661,11 @@ const Staff = mongoose.model("Staff", StaffSchema);
 const PrimaryAssessment = mongoose.model(
   "PrimaryAssessment",
   PrimaryAssessmentSchema
+);
+
+const SelfHelpSkillAssessment = mongoose.model(
+  "SelfHelpSkillAssessment",
+  SelfHelpSkillAssessmentSchema
 );
 
 const SecondaryAssessment = mongoose.model(
@@ -646,6 +709,7 @@ module.exports = {
   Admin,
   Staff,
   PrimaryAssessment,
+  SelfHelpSkillAssessment,
   SecondaryAssessment,
   VocationalAssessment,
   PhysioTherapyAssessment,

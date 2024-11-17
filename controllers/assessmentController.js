@@ -1,6 +1,7 @@
 const assessmentService = require("../services/assessmentService");
 const {
   PrimaryAssessment,
+  SelfHelpSkillAssessment,
   SecondaryAssessment,
   VocationalAssessment,
   CustomAssessment,
@@ -11,6 +12,7 @@ const {
 
 const modelMap = {
   PrimaryAssessment,
+  SelfHelpSkillAssessment,
   SecondaryAssessment,
   VocationalAssessment,
   PhysioTherapyAssessment,
@@ -20,6 +22,7 @@ const modelMap = {
 };
 
 exports.createAssessment = async (req, res) => {
+  console.log("ggg");
   const modelName = req.params.model;
   const model = modelMap[modelName];
   console.log(model);
@@ -37,6 +40,7 @@ exports.createAssessment = async (req, res) => {
 };
 
 exports.getAssessments = async (req, res) => {
+  console.log("ff");
   try {
     const assessments = await assessmentService.getAssessments(
       req.assessmentModel,

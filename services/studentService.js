@@ -1,4 +1,9 @@
-const { Student, PhysioTherapyAssessment, Staff } = require("../models/models");
+const {
+  Student,
+  PhysioTherapyAssessment,
+  Staff,
+  SelfHelpSkillAssessment,
+} = require("../models/models");
 const bcrypt = require("bcrypt");
 const {
   PrimaryAssessment,
@@ -225,6 +230,13 @@ const getAllAssessments = async (studentId) => {
       .populate("staffReference", "userName")
       .sort({ createdAt: -1 });
 
+    const selfHelpSkillAssessment = await SelfHelpSkillAssessment.find({
+      studentReference: studentId,
+    })
+      .select("date _id goal review staffReference")
+      .populate("staffReference", "userName")
+      .sort({ createdAt: -1 });
+
     const homePrograms = await HomeProgram.find({
       studentReference: studentId,
     })
@@ -268,6 +280,14 @@ const getAllAssessments = async (studentId) => {
       })),
       ...customAssessments.map((assessment) => ({
         branch: "custom",
+        id: assessment._id,
+        goal: assessment.goal,
+        review: assessment.review,
+        date: assessment.date,
+        userName: assessment.staffReference?.userName || null,
+      })),
+      ...selfHelpSkillAssessment.map((assessment) => ({
+        branch: "selfhelp",
         id: assessment._id,
         goal: assessment.goal,
         review: assessment.review,

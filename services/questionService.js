@@ -14,6 +14,12 @@ async function getPrimary() {
   });
 }
 
+async function getSelfHelpSkillQuesions() {
+  return await Question.find({
+    branch: "selfhelp",
+  });
+}
+
 async function getSecondary() {
   return await Question.find({
     branch: "secondary",
@@ -84,6 +90,7 @@ module.exports = {
   createQuestion,
   getAll,
   getPrimary,
+  getSelfHelpSkillQuesions,
   getSecondary,
   getVocational,
   getTemplateCase,
