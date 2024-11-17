@@ -236,15 +236,25 @@ router.get("/staff-assessments", async (req, res) => {
       { _id: "PhysioTherapist", count: physioCount },
     ];
 
-    // Generate chart for staff's assessments
-    const staffAssessmentsImage = await createChart(
-      data,
-      "Assessments Conducted by You"
+    const hasAtLeastOneNonEmpty = data.some(
+      (item) => item.count !== 0 && item.count !== undefined
     );
 
-    res.json({
-      staffAssessmentsImage,
-    });
+    if (hasAtLeastOneNonEmpty) {
+      res.json({
+        message: "notFound",
+      });
+    } else {
+      // Generate chart for staff's assessments
+      const staffAssessmentsImage = await createChart(
+        data,
+        "Assessments Conducted by You"
+      );
+
+      res.json({
+        staffAssessmentsImage,
+      });
+    }
   } catch (error) {
     console.error("Error fetching staff assessments:", error);
     res.status(500).json({ message: "Server error" });
