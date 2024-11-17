@@ -13,6 +13,9 @@ const dashboardRoutes = require("./routes/dashboard.js");
 const activityRoutes = require("./routes/activity.js");
 const students = require("./data/students.js");
 const studentService = require("./services/studentService.js");
+
+const workSpaceRoutes = require("./routes/workSpaceRoute.js");
+
 dotenv.config();
 
 const app = express();
@@ -76,6 +79,70 @@ app.use("/api/dashboard", dashboardRoutes);
 //activity
 app.use("/api/activity", activityRoutes);
 
+// wokspace
+app.use("/api/workspace", workSpaceRoutes);
+
+// const syncModels = async () => {
+//   console.log("Synchronizing models with the database...");
+
+//   try {
+//     // Define the schema sync configurations here
+//     const syncConfigurations = {
+//       Question: {
+//         fields: {
+//           branch: [
+//             "primary",
+//             "secondary",
+//             "vocational",
+//             "custom",
+//             "templatecase",
+//             "speechlanguage",
+//             "physiotherapy",
+//             "selfhelp",
+//           ],
+//         },
+//       },
+//       // Add more models and their fields for syncing if needed
+//     };
+
+//     for (const [modelName, config] of Object.entries(syncConfigurations)) {
+//       const Model = mongoose.model(modelName);
+
+//       for (const [field, validValues] of Object.entries(config.fields)) {
+//         console.log(`Checking model: ${modelName}, field: ${field}`);
+
+//         // Find all documents where the field value is not in the valid enum values
+//         const invalidDocs = await Model.find({
+//           [field]: { $nin: validValues },
+//         });
+
+//         if (invalidDocs.length > 0) {
+//           console.log(
+//             `Found ${invalidDocs.length} invalid values for '${field}' in ${modelName}.`
+//           );
+
+//           // Correct or log invalid documents
+//           for (const doc of invalidDocs) {
+//             console.log(`Updating document ID: ${doc._id}`);
+
+//             // Example: Assign a default value or handle the invalid value
+//             doc[field] = validValues[0]; // Replace with the first valid value or your default
+//             await doc.save();
+//           }
+//         } else {
+//           console.log(
+//             `No invalid values found for '${field}' in ${modelName}.`
+//           );
+//         }
+//       }
+//     }
+
+//     console.log("Model synchronization completed.");
+//   } catch (error) {
+//     console.error("Error during model synchronization:", error);
+//   }
+// };
+
 console.log(process.env.MONGO_URI);
 const connectDB = async () => {
   try {
@@ -84,6 +151,8 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     console.log("MongoDB Connected");
+    // await syncModels();
+    // console.log("synced");
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);

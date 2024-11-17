@@ -22,7 +22,21 @@ router.put("/forget-password", studentController.forgetPassword);
 router.get("/all-assessments/:id", studentController.getAllAssessments);
 
 //new
-router.get('/admin/get-students', studentController.getStudents)
-router.get('/user/:id/get-students', studentController.getUserStudents)
+router.get("/admin/get-students", studentController.getStudents);
+router.get("/user/:id/get-students", studentController.getUserStudents);
+
+// growth and dev
+router.post(
+  "/:id/growthanddevelopment",
+  studentController.createGrowthAndDevelopment
+);
+router.put(
+  "/:id/growthanddevelopment/:recordId",
+  studentController.updateGrowthAndDevelopment
+);
+router.delete(
+  "/:id/growthanddevelopment/:recordId",
+  studentController.deleteGrowthAndDevelopment
+);
 
 module.exports = router;

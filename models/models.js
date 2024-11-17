@@ -50,6 +50,10 @@ const StudentSchema = new mongoose.Schema(
             data: {
               type: String,
             },
+            unit: {
+              type: String,
+              default: "kg",
+            },
           },
         ],
         height: [
@@ -60,12 +64,16 @@ const StudentSchema = new mongoose.Schema(
             data: {
               type: String,
             },
+            unit: {
+              type: String,
+              default: "cm",
+            },
           },
         ],
         medications: [
           {
             name: {
-              type: Date,
+              type: String,
             },
             dosage: {
               type: String,
@@ -82,6 +90,7 @@ const StudentSchema = new mongoose.Schema(
             },
           },
         ],
+        createdAt: { type: Date, default: Date.now },
       },
     ],
     fees: [
@@ -565,6 +574,7 @@ const QuestionSchema = new mongoose.Schema(
         "templatecase",
         "speechlanguage",
         "physiotherapy",
+        "selfhelp",
       ],
       required: true,
     },
@@ -590,6 +600,22 @@ const QuestionSchema = new mongoose.Schema(
     },
     options: [String],
     groups: [GroupQuestionSchema], // right or left
+  },
+  { timestamps: true }
+);
+
+const WorkSpaceSchema = new mongoose.Schema(
+  {
+    studentID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
+    branch: {
+      type: String,
+    },
+    space: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -641,6 +667,8 @@ const Question = mongoose.model("Question", QuestionSchema);
 
 const Activity = mongoose.model("Activity", activitySchema);
 
+const WorkSpace = mongoose.model("WorkSpaces", WorkSpaceSchema);
+
 module.exports = {
   Student,
   Admin,
@@ -655,4 +683,5 @@ module.exports = {
   Question,
   HomeProgram,
   Activity,
+  WorkSpace,
 };

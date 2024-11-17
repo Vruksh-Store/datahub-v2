@@ -21,10 +21,12 @@ exports.getStudents = async (req, res) => {
 exports.getStudent = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const student = await studentService.getIndividualStudent(id);
     if (!student) {
       res.status(400).json({ message: "student not found" });
     }
+    console.log(student);
     res.status(200).json({ message: student });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -136,5 +138,57 @@ exports.getUserStudents = async (req, res) => {
     res.json({ message: students });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// growth and dev
+
+exports.createGrowthAndDevelopment = async (req, res) => {
+  const { id } = req.params;
+  const { weight, height, medications, bovelAndSleepHabbits } = req.body;
+
+  try {
+    const growthData = { weight, height, medications, bovelAndSleepHabbits };
+    console.log(growthData);
+    const updatedGrowth = await studentService.createGrowthAndDevelopment(
+      id,
+      growthData
+    );
+    res.status(201).json(updatedGrowth);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateGrowthAndDevelopment = async (req, res) => {
+  const { id, recordId } = req.params;
+  const { weight, height, medications, bovelAndSleepHabbits } = req.body;
+
+  try {
+    const growthData = { weight, height, medications, bovelAndSleepHabbits };
+    const updatedRecord = await studentService.updateGrowthAndDevelopment(
+      id,
+      recordId,
+      growthData
+    );
+    res.status(200).json(updatedRecord);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteGrowthAndDevelopment = async (req, res) => {
+  const { id, recordId } = req.params;
+  try {
+    const result = await studentService.deleteGrowthAndDevelopment(
+      id,
+      recordId
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
   }
 };

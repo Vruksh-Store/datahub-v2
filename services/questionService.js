@@ -80,6 +80,54 @@ async function delTitle(name, title) {
   return await Question.findOneAndDelete({ name, title });
 }
 
+async function getAllTitles() {
+  const results = await Question.aggregate([
+    {
+      $group: {
+        _id: { branch: "$branch", name: "$name" }, // Group by both branch and name
+        titles: { $addToSet: "$title" }, // Use $addToSet to eliminate duplicate titles
+      },
+    },
+    {
+      $project: {
+        _id: 0, // Remove _id field
+        branch: "$_id.branch", // Include branch from _id
+        name: "$_id.name", // Include name from _id
+        titles: 1, // Include titles
+      },
+    },
+  ]);
+
+  const categories = await Question.aggregate([
+    {
+      $match: {
+        branch: "physiotherapy", // Filter based on branch
+        name: "physiotherapy", // Filter based on name
+      },
+    },
+    {
+      $group: {
+        _id: null, // No need to group by any field, just aggregate all
+        categories: { $addToSet: "$category" }, // Get unique categories
+      },
+    },
+    {
+      $project: {
+        _id: 0, // Remove _id field
+        categories: {
+          $filter: {
+            input: "$categories", // Filter the categories array
+            as: "category",
+            cond: { $ne: ["$$category", null] }, // Remove null values
+          },
+        },
+      },
+    },
+  ]);
+
+  return { results, categories };
+}
+
 module.exports = {
   createQuestion,
   getAll,
@@ -96,4 +144,5 @@ module.exports = {
   delQ,
   delName,
   delTitle,
+  getAllTitles,
 };

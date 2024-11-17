@@ -9,6 +9,8 @@ const router = express.Router();
 // post reqs
 router.post("/", questionController.createQuestion);
 
+router.get("/titles", questionController.getTitles);
+
 // get reqs
 router.get("/allquestions", questionController.getAllQuestions);
 router.get("/primaryquestions", questionController.getPrimaryQuestions);
@@ -33,5 +35,7 @@ router.delete("/:id", questionController.deleteIndividualQuestion);
 router.delete("/name/:name", questionController.deleteName);
 // delete every question which has {title : eating | toileting | brushing etc...}
 router.delete("/:name/:title", questionController.deleteTitle);
+
+// get titles
 
 module.exports = router;

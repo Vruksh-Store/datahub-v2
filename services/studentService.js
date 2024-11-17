@@ -25,6 +25,7 @@ async function getStudents() {
 }
 
 async function getIndividualStudent(id) {
+  console.log('control reached')
   return await Student.findById(id);
 }
 
@@ -289,6 +290,65 @@ async function getUserStudents(id) {
   });
 }
 
+const createGrowthAndDevelopment = async (studentId, growthData) => {
+  try {
+    const student = await Student.findById(studentId);
+    if (!student) {
+      throw new Error("Student not found");
+    }
+    student.growthAndDevelopment.push(growthData);
+
+    await student.save();
+
+    return student.growthAndDevelopment;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+const updateGrowthAndDevelopment = async (studentId, recordId, growthData) => {
+  try {
+    const student = await Student.findById(studentId);
+    if (!student) {
+      throw new Error("Student not found");
+    }
+    const recordIndex = student.growthAndDevelopment.findIndex(
+      (record) => record._id.toString() === recordId
+    );
+    if (recordIndex === -1) {
+      throw new Error("Growth and development record not found");
+    }
+    student.growthAndDevelopment[recordIndex] = growthData;
+    await student.save();
+
+    return student.growthAndDevelopment[recordIndex];
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+const deleteGrowthAndDevelopment = async (studentId, recordId) => {
+  try {
+    const student = await Student.findById(studentId);
+    if (!student) {
+      throw new Error("Student not found");
+    }
+
+    const recordIndex = student.growthAndDevelopment.findIndex(
+      (record) => record._id.toString() === recordId
+    );
+    if (recordIndex === -1) {
+      throw new Error("Growth and development record not found");
+    }
+
+    student.growthAndDevelopment.splice(recordIndex, 1);
+    await student.save();
+    return { message: "Growth and development record deleted successfully" };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 module.exports = {
   createStudent,
   getStudents,
@@ -300,4 +360,7 @@ module.exports = {
   getIndividualStudent,
   getAllAssessments,
   getUserStudents,
+  createGrowthAndDevelopment,
+  updateGrowthAndDevelopment,
+  deleteGrowthAndDevelopment,
 };

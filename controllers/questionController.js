@@ -141,3 +141,13 @@ exports.deleteTitle = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getTitles = async (req, res) => {
+  try {
+
+    const result = await questionService.getAllTitles();
+    res.status(200).json({ message: result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
