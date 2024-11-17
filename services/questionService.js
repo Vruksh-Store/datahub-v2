@@ -86,24 +86,186 @@ async function delTitle(name, title) {
   return await Question.findOneAndDelete({ name, title });
 }
 
+// async function getAllTitles() {
+//   const results = await Question.aggregate([
+//     {
+//       $group: {
+//         _id: { branch: "$branch", name: "$name" }, // Group by both branch and name
+//         titles: { $addToSet: "$title" }, // Use $addToSet to eliminate duplicate titles
+//       },
+//     },
+//     {
+//       $project: {
+//         _id: 0, // Remove _id field
+//         branch: "$_id.branch", // Include branch from _id
+//         name: "$_id.name", // Include name from _id
+//         titles: 1, // Include titles
+//       },
+//     },
+//   ]);
+
+//   const categories = await Question.aggregate([
+//     {
+//       $match: {
+//         branch: "physiotherapy", // Filter based on branch
+//         name: "physiotherapy", // Filter based on name
+//       },
+//     },
+//     {
+//       $group: {
+//         _id: null, // No need to group by any field, just aggregate all
+//         categories: { $addToSet: "$category" }, // Get unique categories
+//       },
+//     },
+//     {
+//       $project: {
+//         _id: 0, // Remove _id field
+//         categories: {
+//           $filter: {
+//             input: "$categories", // Filter the categories array
+//             as: "category",
+//             cond: { $ne: ["$$category", null] }, // Remove null values
+//           },
+//         },
+//       },
+//     },
+//   ]);
+
+//   return { results, categories };
+// }
+
+// SORT IS WORKING
+
+// async function getAllTitles() {
+//   // Aggregate results with sorting
+//   const results = await Question.aggregate([
+//     {
+//       $group: {
+//         _id: { branch: "$branch", name: "$name" }, // Group by both branch and name
+//         titles: { $addToSet: "$title" }, // Use $addToSet to eliminate duplicate titles
+//       },
+//     },
+//     {
+//       $project: {
+//         _id: 0, // Remove _id field
+//         branch: "$_id.branch", // Include branch from _id
+//         name: "$_id.name", // Include name from _id
+//         titles: 1, // Include titles
+//       },
+//     },
+//     {
+//       $sort: {
+//         branch: 1, // Sort branches alphabetically (ascending)
+//         name: 1, // Sort names alphabetically (ascending)
+//       },
+//     },
+//   ]);
+
+//   // Aggregate categories with sorting
+//   const categories = await Question.aggregate([
+//     {
+//       $match: {
+//         branch: "physiotherapy", // Filter based on branch
+//         name: "physiotherapy", // Filter based on name
+//       },
+//     },
+//     {
+//       $group: {
+//         _id: null, // No need to group by any field, just aggregate all
+//         categories: { $addToSet: "$category" }, // Get unique categories
+//       },
+//     },
+//     {
+//       $project: {
+//         _id: 0, // Remove _id field
+//         categories: {
+//           $filter: {
+//             input: "$categories", // Filter the categories array
+//             as: "category",
+//             cond: { $ne: ["$$category", null] }, // Remove null values
+//           },
+//         },
+//       },
+//     },
+//     {
+//       $sort: {
+//         categories: 1, // Sort categories alphabetically (ascending)
+//       },
+//     },
+//   ]);
+
+//   return { results, categories };
+// }
+
+// SORT BASED UPON THE NUMBER
 async function getAllTitles() {
+  // Aggregate results with normalized and sorted titles
   const results = await Question.aggregate([
     {
       $group: {
-        _id: { branch: "$branch", name: "$name" }, // Group by both branch and name
-        titles: { $addToSet: "$title" }, // Use $addToSet to eliminate duplicate titles
+        _id: { branch: "$branch", name: "$name" }, // Group by branch and name
+        titles: { $addToSet: "$title" }, // Collect unique titles
       },
     },
     {
       $project: {
-        _id: 0, // Remove _id field
-        branch: "$_id.branch", // Include branch from _id
-        name: "$_id.name", // Include name from _id
-        titles: 1, // Include titles
+        _id: 0,
+        branch: "$_id.branch",
+        name: "$_id.name",
+        normalizedTitles: {
+          $map: {
+            input: "$titles",
+            as: "title",
+            in: {
+              original: "$$title",
+              normalized: {
+                $ifNull: [
+                  {
+                    $regexFind: {
+                      input: "$$title",
+                      regex: /^[^a-zA-Z]*(.+)/, // Match and capture meaningful part
+                    },
+                  }.match, // Directly access the match field
+                  "$$title", // Default to original if no match
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        sortedTitles: {
+          $map: {
+            input: {
+              $sortArray: {
+                input: "$normalizedTitles",
+                sortBy: { normalized: 1 },
+              },
+            },
+            as: "title",
+            in: "$$title.original", // Keep original title for output
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        branch: 1,
+        name: 1,
+        titles: "$sortedTitles", // Replace titles with sorted versions
+      },
+    },
+    {
+      $sort: {
+        branch: 1, // Sort branches alphabetically
+        name: 1, // Sort names alphabetically
       },
     },
   ]);
 
+  // Aggregate and sort categories (handle non-numeric values gracefully)
   const categories = await Question.aggregate([
     {
       $match: {
@@ -113,20 +275,53 @@ async function getAllTitles() {
     },
     {
       $group: {
-        _id: null, // No need to group by any field, just aggregate all
-        categories: { $addToSet: "$category" }, // Get unique categories
+        _id: null, // Aggregate all into one group
+        categories: { $addToSet: "$category" }, // Collect unique categories
       },
     },
     {
       $project: {
-        _id: 0, // Remove _id field
+        _id: 0,
         categories: {
-          $filter: {
-            input: "$categories", // Filter the categories array
+          $map: {
+            input: "$categories",
             as: "category",
-            cond: { $ne: ["$$category", null] }, // Remove null values
+            in: {
+              original: "$$category",
+              number: {
+                $cond: [
+                  { $regexMatch: { input: "$$category", regex: /^[0-9]+$/ } }, // Check if it's numeric
+                  { $toDouble: "$$category" }, // Convert numeric string to number
+                  null, // Non-numeric strings get null
+                ],
+              },
+            },
           },
         },
+      },
+    },
+    {
+      $addFields: {
+        sortedCategories: {
+          $map: {
+            input: {
+              $sortArray: {
+                input: "$categories",
+                sortBy: {
+                  number: 1, // Sort by numeric value first (nulls go last)
+                  original: 1, // Then by original string alphabetically
+                },
+              },
+            },
+            as: "category",
+            in: "$$category.original", // Keep original category for output
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        categories: "$sortedCategories", // Replace categories with sorted versions
       },
     },
   ]);

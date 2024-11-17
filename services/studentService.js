@@ -30,12 +30,12 @@ async function getStudents() {
 }
 
 async function getIndividualStudent(id) {
-  console.log('control reached')
+  console.log("control reached");
   return await Student.findById(id);
 }
 
-async function loginStudents(name, password) {
-  const student = await Student.findOne({ name });
+async function loginStudents(registerNo, password) {
+  const student = await Student.findOne({ registerNo });
 
   if (student && (await bcrypt.compare(password, student.password))) {
     return student;

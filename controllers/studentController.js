@@ -36,8 +36,8 @@ exports.getStudent = async (req, res) => {
 exports.loginStudent = async (req, res) => {
   console.log(req.body);
   try {
-    const { name, password } = req.body;
-    const student = await studentService.loginStudents(name, password);
+    const { registerNo, password } = req.body;
+    const student = await studentService.loginStudents(registerNo, password);
 
     if (!student) {
       return res.status(401).json({ message: "Invalid credentials" });
