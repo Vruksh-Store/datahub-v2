@@ -28,10 +28,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/api/cron", async (req, res) => {
-  res
-    .json({
-      message: "Cron Waked",
-    })
+  console.log('app waked');
+  res.send('k')
     .status(200);
 });
 
