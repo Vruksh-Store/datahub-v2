@@ -85,17 +85,41 @@ async function customAssessmentQuesions(name) {
 async function getDifferentAssessments() {
   try {
     // Helper function to map assessment data and avoid duplicates
+    // const mapUniqueStudents = (assessmentData) => {
+    //   const uniqueStudents = new Map();
+    //   assessmentData.forEach((assessment) => {
+    //     const student = assessment.studentReference;
+    //     if (!uniqueStudents.has(student._id.toString())) {
+    //       uniqueStudents.set(student._id.toString(), {
+    //         _id: student._id,
+    //         name: student.name,
+    //         registerNo: student.registerNo,
+    //         level: student.level,
+    //       });
+    //     }
+    //   });
+    //   return Array.from(uniqueStudents.values());
+    // };
     const mapUniqueStudents = (assessmentData) => {
       const uniqueStudents = new Map();
       assessmentData.forEach((assessment) => {
         const student = assessment.studentReference;
-        if (!uniqueStudents.has(student._id.toString())) {
-          uniqueStudents.set(student._id.toString(), {
-            _id: student._id,
-            name: student.name,
-            registerNo: student.registerNo,
-            level: student.level,
-          });
+
+        // Check if the studentReference exists and is not null
+        if (student && student._id) {
+          if (!uniqueStudents.has(student._id.toString())) {
+            uniqueStudents.set(student._id.toString(), {
+              _id: student._id,
+              name: student.name,
+              registerNo: student.registerNo,
+              level: student.level,
+            });
+          }
+        } else {
+          console.warn(
+            "Missing or invalid studentReference in assessment:",
+            assessment
+          );
         }
       });
       return Array.from(uniqueStudents.values());
