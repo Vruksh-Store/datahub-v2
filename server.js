@@ -13,8 +13,9 @@ const dashboardRoutes = require("./routes/dashboard.js");
 const activityRoutes = require("./routes/activity.js");
 const students = require("./data/students.js");
 const studentService = require("./services/studentService.js");
-;
+const teachingLearningMaterialRoutes = require('./routes/teachingLearningMaterialRoutes');
 const workSpaceRoutes = require("./routes/workSpaceRoute.js");
+const staffMeetingRoutes = require('./routes/staffMeetingRoutes');
 
 dotenv.config();
 
@@ -80,6 +81,12 @@ app.use("/api/activity", activityRoutes);
 
 // wokspace
 app.use("/api/workspace", workSpaceRoutes);
+
+app.use('/api/teaching-learning-materials', teachingLearningMaterialRoutes);
+
+app.use('/api/staff-meetings', staffMeetingRoutes);
+
+
 
 // const syncModels = async () => {
 //   console.log("Synchronizing models with the database...");

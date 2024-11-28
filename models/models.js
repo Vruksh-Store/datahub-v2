@@ -681,6 +681,71 @@ const WorkSpaceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const teachingLearningMaterialSchema = new mongoose.Schema({
+  userName: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Staff',  // Assuming 'Staff' is the model name for the staff collection
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  remarks: {
+    type: String,
+    required: false,
+  },
+}, { timestamps: true });  // `timestamps` adds `createdAt` and `updatedAt` fields
+
+const staffMeetingsSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+    required: true,
+  },
+  meetingnotes: {
+    type: String,
+    required: false,
+  },
+  goals: {
+    type: String,
+    required: false,
+  },
+  startTime: {
+    type: String,
+    required: true,
+  },
+  endTime: {
+    type: String,
+    required: true,
+  },
+  duration: {
+    type: Number,  // Duration in minutes
+    required: true,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Staff',  // Reference to the 'Staff' collection
+    required: true,
+  },
+  userName: {
+    type: String,
+    required: true,
+  },
+}, { timestamps: true });  // `timestamps` adds `createdAt` and `updatedAt` fields
+
+const StaffMeeting = mongoose.model('StaffMeeting', staffMeetingsSchema);
+
+
+const TeachingLearningMaterial = mongoose.model('TeachingLearningMaterial', teachingLearningMaterialSchema);
+
 const Student = mongoose.model("Student", StudentSchema);
 
 const Admin = mongoose.model("Admin", AdminSchema);
@@ -751,4 +816,6 @@ module.exports = {
   HomeProgram,
   Activity,
   WorkSpace,
+  StaffMeeting,
+  TeachingLearningMaterial
 };
