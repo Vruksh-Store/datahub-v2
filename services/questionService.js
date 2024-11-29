@@ -32,6 +32,12 @@ async function getVocational() {
   });
 }
 
+async function getBasicDetails(){
+  return await Question.find({
+    branch: "basicDetails",
+  });
+}
+
 async function getTemplateCase() {
   return await Question.find({
     branch: "templatecase",
@@ -67,12 +73,30 @@ async function getIndividualQByTitle(data) {
   });
 }
 
+// async function updateIndividualQuestion(updates) {
+//   const updatePromises = updates.map(({ id, data }) =>
+//     Question.findByIdAndUpdate(id, { question: data.question })
+//   );
+//   return await Promise.all(updatePromises);
+// }
 async function updateIndividualQuestion(updates) {
-  const updatePromises = updates.map(({ id, data }) =>
-    Question.findByIdAndUpdate(id, { question: data.question })
-  );
+  const updatePromises = updates.map(({ id, data }) => {
+    // Create an update object with the question field
+    const updateData = { question: data.question };
+
+    // If data.questionNo exists, add it to the update object
+    if (data.questionNo !== undefined) {
+      updateData.questionNo = data.questionNo;
+    }
+
+    // Update the question (and possibly questionNo) for the given id
+    return Question.findByIdAndUpdate(id, updateData);
+  });
+
+  // Wait for all update operations to complete
   return await Promise.all(updatePromises);
 }
+
 
 async function delQ(id) {
   return await Question.findByIdAndDelete(id);
@@ -346,5 +370,6 @@ module.exports = {
   delQ,
   delName,
   delTitle,
+  getBasicDetails,
   getAllTitles,
 };

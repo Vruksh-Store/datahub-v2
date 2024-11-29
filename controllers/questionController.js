@@ -57,6 +57,15 @@ exports.getVocationalQuestions = async (req, res) => {
   }
 };
 
+exports.getBasicDetailsQuestions = async (req, res) => {
+  try {
+    const primaryQs = await questionService.getBasicDetails();
+    res.status(200).json(primaryQs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.getCustomQuestions = async (req, res) => {
   try {
     const primaryQs = await questionService.getCustom(req.params.name);

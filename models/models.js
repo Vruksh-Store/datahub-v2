@@ -215,6 +215,48 @@ const SelfHelpSkillAssessmentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const BasicDetailsSchema = new mongoose.Schema(
+  {
+    studentReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    staffReference: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      refPath: "staffType",
+    },
+    staffType: {
+      type: String,
+      required: true,
+      enum: ["Staff", "admin"],
+    },
+    answers: [
+      {
+        questionId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Question",
+          required: true,
+        },
+        answer: {
+          type: String,
+          required: true,
+        },
+        reason: {
+          type: String,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+
 const PrimaryAssessmentSchema = new mongoose.Schema(
   {
     studentReference: {
@@ -630,6 +672,7 @@ const QuestionSchema = new mongoose.Schema(
         "speechlanguage",
         "physiotherapy",
         "selfhelp",
+        "basicDetails"
       ],
       required: true,
     },
@@ -644,6 +687,10 @@ const QuestionSchema = new mongoose.Schema(
     question: {
       type: String,
       required: true, //Flexors
+    },
+    questionNo: {
+      type: Number,
+      required: true
     },
     category: {
       type: String, //Shoulder
@@ -752,6 +799,12 @@ const Admin = mongoose.model("Admin", AdminSchema);
 
 const Staff = mongoose.model("Staff", StaffSchema);
 
+const BasicDetails = mongoose.model(
+  "BasicDetails",
+  BasicDetailsSchema
+);
+
+
 const PrimaryAssessment = mongoose.model(
   "PrimaryAssessment",
   PrimaryAssessmentSchema
@@ -817,5 +870,6 @@ module.exports = {
   Activity,
   WorkSpace,
   StaffMeeting,
-  TeachingLearningMaterial
+  TeachingLearningMaterial,
+  BasicDetails,
 };

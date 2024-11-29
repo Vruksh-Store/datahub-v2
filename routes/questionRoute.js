@@ -17,6 +17,7 @@ router.get("/selfhelpquestions", questionController.getSelfHelpSkillQuestions);
 router.get("/primaryquestions", questionController.getPrimaryQuestions);
 router.get("/secondaryquestions", questionController.getSecondaryQuestions);
 router.get("/vocationalquestions", questionController.getVocationalQuestions);
+router.get("/basicDetailsquestions", questionController.getBasicDetailsQuestions);
 router.get(
   "/physiotherapyquestions",
   questionController.getPhysioTherapyQuestions

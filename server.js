@@ -16,6 +16,9 @@ const studentService = require("./services/studentService.js");
 const teachingLearningMaterialRoutes = require('./routes/teachingLearningMaterialRoutes');
 const workSpaceRoutes = require("./routes/workSpaceRoute.js");
 const staffMeetingRoutes = require('./routes/staffMeetingRoutes');
+const basicDetails = require("./data/basicDetails.js");
+const { Question } = require("./models/models.js");
+const basicDetailsRoutes = require('./routes/basicDetailsRoute.js')
 
 dotenv.config();
 
@@ -86,7 +89,7 @@ app.use('/api/teaching-learning-materials', teachingLearningMaterialRoutes);
 
 app.use('/api/staff-meetings', staffMeetingRoutes);
 
-
+app.use('/api/basic', basicDetailsRoutes);
 
 // const syncModels = async () => {
 //   console.log("Synchronizing models with the database...");
@@ -169,7 +172,7 @@ connectDB();
 
 // mongoose.connection.on("open", async () => {
 //   try {
-//     await Question.insertMany(primary);
+//     await Question.insertMany(basicDetails);
 //     console.log("done bha");
 //   } catch (error) {
 //     console.log(error);
@@ -179,8 +182,8 @@ connectDB();
 // mongoose.connection.on("open", async () => {
 //   try {
 //     await Question.updateMany(
-//       { default: { $exists: false } }, // Check if the field does not exist
-//       { $set: { default: "" } } // Set reasonBox to false
+//       { questionNo: { $exists: false } }, // Check if the field does not exist
+//       { $set: { questionNo: 0 } } // Set reasonBox to false
 //     );
 //     console.log("done bha");
 //   } catch (error) {
