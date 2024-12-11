@@ -245,7 +245,7 @@ const BasicDetailsSchema = new mongoose.Schema(
         },
         answer: {
           type: String,
-          required: true,
+          // required: true,
         },
         reason: {
           type: String,

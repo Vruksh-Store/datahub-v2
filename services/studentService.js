@@ -186,66 +186,67 @@ const getAllAssessments = async (studentId) => {
     const primaryAssessments = await PrimaryAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName") // Populate only the userName from Staff
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference", "userName username") // Populate only the userName from Staff
       .sort({ createdAt: -1 });
 
     const secondaryAssessments = await SecondaryAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName")
+      .select("date _id goal review staffType staffReference ")
+      .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const vocationalAssessments = await VocationalAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName")
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const physioTherapyAssessments = await PhysioTherapyAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName")
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const customAssessments = await CustomAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName");
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference");
 
     const templateCaseRecords = await TemplateCaseRecord.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName")
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const speechLanguageProfiles = await SpeechLanguageProfile.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName")
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const selfHelpSkillAssessment = await SelfHelpSkillAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName")
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const homePrograms = await HomeProgram.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference")
-      .populate("staffReference", "userName")
+      .select("date _id goal review staffReference staffType")
+      .populate("staffReference")
       .sort({ createdAt: -1 });
 
     // Combine all assessments into a single array
+
     const assessments = [
       ...primaryAssessments.map((assessment) => ({
         branch: "primary",
@@ -253,7 +254,7 @@ const getAllAssessments = async (studentId) => {
         goal: assessment.goal,
         review: assessment.review,
         date: assessment.date,
-        userName: assessment.staffReference?.userName || null, // Extract userName if exists
+        userName: assessment.staffReference?.userName || null,
       })),
       ...secondaryAssessments.map((assessment) => ({
         branch: "secondary",
@@ -261,7 +262,7 @@ const getAllAssessments = async (studentId) => {
         goal: assessment.goal,
         review: assessment.review,
         date: assessment.date,
-        userName: assessment.staffReference?.userName || null,
+        userName: assessment.staffReference.userName || null,
       })),
       ...vocationalAssessments.map((assessment) => ({
         branch: "vocational",

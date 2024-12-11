@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 async function login(username, password) {
   console.log(username);
-  let user = await Admin.findOne({ username });
+  let user = await Admin.findOne({ userName: username });
   let userType = "admin";
 
   if (!user) {
