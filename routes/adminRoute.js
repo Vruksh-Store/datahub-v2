@@ -12,5 +12,6 @@ router.get("/staffs", adminController.getStaffs);
 router.get("/students", adminController.getStudents);
 router.put("/admin/staff/add-student", adminController.addStudents);
 router.put("/admin/staff/remove-student", adminController.removeStudents);
+router.put("/admin/staff/access", adminController.editAccess);
 
 module.exports = router;

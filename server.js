@@ -13,12 +13,12 @@ const dashboardRoutes = require("./routes/dashboard.js");
 const activityRoutes = require("./routes/activity.js");
 const students = require("./data/students.js");
 const studentService = require("./services/studentService.js");
-const teachingLearningMaterialRoutes = require('./routes/teachingLearningMaterialRoutes');
+const teachingLearningMaterialRoutes = require("./routes/teachingLearningMaterialRoutes");
 const workSpaceRoutes = require("./routes/workSpaceRoute.js");
-const staffMeetingRoutes = require('./routes/staffMeetingRoutes');
+const staffMeetingRoutes = require("./routes/staffMeetingRoutes");
 const basicDetails = require("./data/basicDetails.js");
-const { Question } = require("./models/models.js");
-const basicDetailsRoutes = require('./routes/basicDetailsRoute.js')
+const { Question, StaffMeeting, Staff } = require("./models/models.js");
+const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
 
 dotenv.config();
 
@@ -32,9 +32,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/api/cron", async (req, res) => {
-  console.log('app waked');
-  res.send('k')
-    .status(200);
+  console.log("app waked");
+  res.send("k").status(200);
 });
 
 app.use("/api/students", studentRoutes);
@@ -85,11 +84,11 @@ app.use("/api/activity", activityRoutes);
 // wokspace
 app.use("/api/workspace", workSpaceRoutes);
 
-app.use('/api/teaching-learning-materials', teachingLearningMaterialRoutes);
+app.use("/api/teaching-learning-materials", teachingLearningMaterialRoutes);
 
-app.use('/api/staff-meetings', staffMeetingRoutes);
+app.use("/api/staff-meetings", staffMeetingRoutes);
 
-app.use('/api/basic', basicDetailsRoutes);
+app.use("/api/basic", basicDetailsRoutes);
 
 // const syncModels = async () => {
 //   console.log("Synchronizing models with the database...");
@@ -181,14 +180,27 @@ connectDB();
 
 // mongoose.connection.on("open", async () => {
 //   try {
-//     await Question.updateMany(
-//       { questionNo: { $exists: false } }, // Check if the field does not exist
-//       { $set: { questionNo: 0 } } // Set reasonBox to false
+//     const defaultAccess = [
+//       { view: "templateCase", canView: false, canEdit: false },
+//       { view: "physioTherapy", canView: false, canEdit: false },
+//       { view: "occupational", canView: false, canEdit: false },
+//       { view: "speechLanguage", canView: false, canEdit: false },
+//       { view: "assessments", canView: false, canEdit: false },
+//       { view: "specialEducation", canView: false, canEdit: false },
+//       { view: "growthAndDevelopment", canView: false, canEdit: false },
+//     ];
+
+//     // Update all staff where access is an empty array
+//     await Staff.updateMany(
+//       { access: { $size: 0 } }, // Match documents where access is an empty array
+//       { $set: { access: defaultAccess } } // Set the default access
 //     );
-//     console.log("done bha");
+
+//     console.log("Access field populated for all staff with empty access.");
 //   } catch (error) {
-//     console.log(error);
+//     console.error("Error updating access field:", error);
 //   }
 // });
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
