@@ -32,7 +32,7 @@ async function getVocational() {
   });
 }
 
-async function getBasicDetails(){
+async function getBasicDetails() {
   return await Question.find({
     branch: "basicDetails",
   });
@@ -79,24 +79,50 @@ async function getIndividualQByTitle(data) {
 //   );
 //   return await Promise.all(updatePromises);
 // }
+// async function updateIndividualQuestion(updates) {
+//   const updatePromises = updates.map(({ id, data }) => {
+//     // Create an update object with the question field
+//     const updateData = { question: data.question };
+
+//     // If data.questionNo exists, add it to the update object
+//     if (data.questionNo !== undefined) {
+//       updateData.questionNo = data.questionNo;
+//     }
+
+//     // Update the question (and possibly questionNo) for the given id
+//     return Question.findByIdAndUpdate(id, updateData);
+//   });
+
+//   // Wait for all update operations to complete
+//   return await Promise.all(updatePromises);
+// }
 async function updateIndividualQuestion(updates) {
   const updatePromises = updates.map(({ id, data }) => {
-    // Create an update object with the question field
+    // Create an update object with the required fields
     const updateData = { question: data.question };
 
-    // If data.questionNo exists, add it to the update object
+    // Conditionally add questionNo if it exists
     if (data.questionNo !== undefined) {
       updateData.questionNo = data.questionNo;
     }
 
-    // Update the question (and possibly questionNo) for the given id
+    // Conditionally add options if the array is present
+    if (Array.isArray(data.options) && data.options.length > 0) {
+      updateData.options = data.options;
+    }
+
+    // Conditionally add colors if the array is present
+    if (Array.isArray(data.colors) && data.colors.length > 0) {
+      updateData.colors = data.colors;
+    }
+
+    // Update the document in the database
     return Question.findByIdAndUpdate(id, updateData);
   });
 
   // Wait for all update operations to complete
   return await Promise.all(updatePromises);
 }
-
 
 async function delQ(id) {
   return await Question.findByIdAndDelete(id);
