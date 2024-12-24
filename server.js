@@ -171,10 +171,13 @@ connectDB();
 
 // mongoose.connection.on("open", async () => {
 //   try {
-//     await Question.insertMany(basicDetails);
-//     console.log("done bha");
+//     await Question.updateMany(
+//       { type: "multiple-choice", colors: { $exists: false } }, // Match documents with type "multiple-choice" and no colors field
+//       { $set: { colors: [] } } // Set colors to an empty array
+//     );
+//     console.log("Colors field initialized for multiple-choice questions");
 //   } catch (error) {
-//     console.log(error);
+//     console.error("Error initializing colors field:", error);
 //   }
 // });
 
