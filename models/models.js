@@ -227,6 +227,9 @@ const SelfHelpSkillAssessmentSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        color: {
+          type: String,
+        },
       },
     ],
   },
@@ -264,6 +267,9 @@ const BasicDetailsSchema = new mongoose.Schema(
         answer: {
           type: String,
           // required: true,
+        },
+        color: {
+          type: String,
         },
         reason: {
           type: String,
@@ -313,6 +319,9 @@ const PrimaryAssessmentSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        color: {
+          type: String,
+        },
         reason: {
           type: String,
         },
@@ -361,6 +370,9 @@ const SecondaryAssessmentSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        color: {
+          type: String,
+        },
       },
     ],
   },
@@ -405,6 +417,9 @@ const VocationalAssessmentSchema = new mongoose.Schema(
         answer: {
           type: String,
           required: true,
+        },
+        color: {
+          type: String,
         },
       },
     ],
@@ -503,6 +518,9 @@ const CustomAssessmentSchema = new mongoose.Schema(
         answer: {
           type: String,
           required: true,
+        },
+        color: {
+          type: String,
         },
         reason: {
           type: String,
@@ -617,6 +635,9 @@ const TemplateCaseRecordSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        color: {
+          type: String,
+        },
         reason: {
           type: String,
         },
@@ -658,6 +679,9 @@ const SpeechLanguageProfileSchema = new mongoose.Schema(
         answer: {
           type: String,
           required: true,
+        },
+        color: {
+          type: String,
         },
       },
     ],
@@ -729,6 +753,7 @@ const QuestionSchema = new mongoose.Schema(
       type: String,
     },
     options: [String],
+    colors: [String],
     groups: [GroupQuestionSchema], // right or left
   },
   { timestamps: true }

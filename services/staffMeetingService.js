@@ -15,7 +15,9 @@ const createStaffMeeting = async (data) => {
 // Get all Staff Meetings
 const getAllStaffMeetings = async () => {
   try {
-    return await StaffMeeting.find().populate("userId", "userName"); // Populate userId with userName from Staff collection
+    return await StaffMeeting.find()
+      .populate("userId", "userName")
+      .sort({ createdAt: -1 }); // Populate userId with userName from Staff collection
   } catch (error) {
     throw new Error("Error fetching meetings: " + error.message);
   }
