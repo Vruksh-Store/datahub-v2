@@ -166,6 +166,24 @@ const StaffSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
       },
     ],
+    access: {
+      type: [
+        {
+          view: { type: String },
+          canView: { type: Boolean, default: false },
+          canEdit: { type: Boolean, default: false },
+        },
+      ],
+      default: [
+        { view: "templateCase", canView: false, canEdit: false },
+        { view: "physioTherapy", canView: false, canEdit: false },
+        { view: "occupational", canView: false, canEdit: false },
+        { view: "speechLanguage", canView: false, canEdit: false },
+        { view: "assessments", canView: false, canEdit: false },
+        { view: "specialEducation", canView: false, canEdit: false },
+        { view: "growthAndDevelopment", canView: false, canEdit: false },
+      ],
+    },
   },
   { timestamps: true }
 );
@@ -555,6 +573,11 @@ const HomeProgramSchema = new mongoose.Schema(
     exercises: [
       {
         name: { type: String, required: true },
+        references: [
+          {
+            type: String,
+          },
+        ],
         repetitions: [
           {
             date: {
@@ -792,6 +815,10 @@ const staffMeetingsSchema = new mongoose.Schema(
     goals: {
       type: String,
       required: false,
+    },
+    freeze: {
+      type: Boolean,
+      default: false,
     },
     startTime: {
       type: String,

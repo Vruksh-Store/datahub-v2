@@ -9,7 +9,7 @@ async function createAdmin(data) {
 }
 
 async function createStaff(data) {
-  console.log(data)
+  console.log(data);
   const salt = await bcrypt.genSalt(5);
   data.password = await bcrypt.hash(data.password, salt);
 
@@ -57,6 +57,14 @@ async function removeStudents(staffId, studentId) {
   );
 }
 
+async function editAccess(staffId, data) {
+  return await Staff.findByIdAndUpdate(
+    { _id: staffId },
+    { $set: { access: data } },
+    { new: true }
+  );
+}
+
 module.exports = {
   createAdmin,
   createStaff,
@@ -66,4 +74,5 @@ module.exports = {
   getStudents,
   addStudents,
   removeStudents,
+  editAccess,
 };

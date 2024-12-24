@@ -52,10 +52,24 @@ const deleteStaffMeeting = async (id) => {
   }
 };
 
+const freezeMeeting = async (id, isFreezed) => {
+  try {
+    console.log("first");
+    console.log(isFreezed);
+    return await StaffMeeting.findByIdAndUpdate(
+      id,
+      { freeze: isFreezed },
+      { new: true }
+    );
+  } catch (error) {
+    throw new Error("Error deleting meeting: " + error.message);
+  }
+};
 module.exports = {
   createStaffMeeting,
   getAllStaffMeetings,
   getStaffMeetingById,
   updateStaffMeeting,
   deleteStaffMeeting,
+  freezeMeeting,
 };

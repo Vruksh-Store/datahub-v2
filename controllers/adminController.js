@@ -83,6 +83,19 @@ async function removeStudents(req, res) {
   }
 }
 
+async function editAccess(req, res) {
+  console.log(3);
+  const staffId = req.body.staffId;
+  const data = req.body.accessData;
+  try {
+    const response = await adminService.editAccess(staffId, data);
+    console.log(response);
+    res.json(response);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
 module.exports = {
   createAdmin,
   createStaff,
@@ -91,5 +104,6 @@ module.exports = {
   getStaffs,
   getStudents,
   addStudents,
-  removeStudents
+  removeStudents,
+  editAccess,
 };
