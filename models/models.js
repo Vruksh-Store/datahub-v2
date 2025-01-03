@@ -117,6 +117,10 @@ const AdminSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
+    logout: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
@@ -166,6 +170,10 @@ const StaffSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
       },
     ],
+    logout: {
+      type: Boolean,
+      default: false,
+    },
     access: {
       type: [
         {
