@@ -51,14 +51,27 @@ async function getLatestAssessment(model, id) {
   return await model.findById(id);
 }
 
+// async function updateAssessmentRecord(model, id, data) {
+//   console.log("fffff");
+//   console.log(model, id);
+//   return await model.findByIdAndUpdate(
+//     id,
+//     { answers: data.answers },
+//     { new: true }
+//   );
+// }
 async function updateAssessmentRecord(model, id, data) {
   console.log("fffff");
   console.log(model, id);
-  return await model.findByIdAndUpdate(
-    id,
-    { answers: data.answers },
-    { new: true }
-  );
+
+  // Build the update object dynamically
+  const updateObj = { answers: data.answers };
+
+  if (data.goal) updateObj.goal = data.goal;
+  if (data.review) updateObj.review = data.review;
+
+  // Update the record in the database
+  return await model.findByIdAndUpdate(id, updateObj, { new: true });
 }
 
 async function deleteAssessment(model, id) {
