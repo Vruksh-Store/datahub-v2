@@ -17,7 +17,7 @@ const teachingLearningMaterialRoutes = require("./routes/teachingLearningMateria
 const workSpaceRoutes = require("./routes/workSpaceRoute.js");
 const staffMeetingRoutes = require("./routes/staffMeetingRoutes");
 const basicDetails = require("./data/basicDetails.js");
-const { Question, StaffMeeting, Staff } = require("./models/models.js");
+const { Question, StaffMeeting, Staff, Student } = require("./models/models.js");
 const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
 
 dotenv.config();
@@ -168,6 +168,44 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+// const crypto = require("crypto");
+
+// const SECRET_KEY = "webgi215.official@gmail.com";
+
+// function encrypt(text, password) {
+//   text = text.toString();
+//   password = password.toString();
+
+//   const key = crypto.createHash("sha256").update(password).digest();
+//   const iv = crypto.randomBytes(16);
+//   const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+  
+//   let encrypted = cipher.update(text, "utf8", "hex");
+//   encrypted += cipher.final("hex");
+  
+//   return iv.toString("hex") + ":" + encrypted;
+// }
+
+// mongoose.connection.on("open", async () => {
+//     try {
+//         console.log("Database connected. Updating student passwords...");
+
+//         const students = await Student.find();
+//         for (let student of students) {
+//             if (!student.phone) continue;
+//             const encryptedPassword = encrypt(student.phone, SECRET_KEY);
+//             await Student.updateOne(
+//                 { _id: student._id },
+//                 { $set: { password: encryptedPassword } }
+//             );
+//         }
+
+//         console.log("All student passwords updated with encryption.");
+//     } catch (error) {
+//         console.error("Error updating passwords:", error);
+//     }
+// });
 
 // mongoose.connection.on("open", async () => {
 //   try {

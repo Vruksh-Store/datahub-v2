@@ -15,14 +15,33 @@ const {
   HomeProgram,
 } = require("../models/models");
 
+const crypto = require("crypto");
+
+const SECRET_KEY = "webgi215.official@gmail.com";
+
+function encrypt(text, password) {
+    text = text.toString();
+    password = password.toString();
+
+    const key = crypto.createHash("sha256").update(password).digest();
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+    
+    let encrypted = cipher.update(text, "utf8", "hex");
+    encrypted += cipher.final("hex");
+
+    return iv.toString("hex") + ":" + encrypted;
+}
+
 async function createStudent(studentData) {
-  const saltRounds = 5;
-  const hashedPassword = await bcrypt.hash(studentData.password, saltRounds);
-  const newStudent = new Student({
-    ...studentData,
-    password: hashedPassword,
-  });
-  return await newStudent.save();
+    const encryptedPassword = encrypt(studentData.password, SECRET_KEY);
+
+    const newStudent = new Student({
+        ...studentData,
+        password: encryptedPassword,
+    });
+
+    return await newStudent.save();
 }
 
 async function getStudents() {
@@ -34,23 +53,48 @@ async function getIndividualStudent(id) {
   return await Student.findById(id);
 }
 
+function decrypt(encryptedText, password) {
+  if (!encryptedText) return "";
+
+  password = password.toString();
+  try {
+      const key = crypto.createHash("sha256").update(password).digest();
+      const parts = encryptedText.split(":");
+      const iv = Buffer.from(parts[0], "hex");
+      const encrypted = Buffer.from(parts[1], "hex");
+
+      const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+      let decrypted = decipher.update(encrypted);
+      decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+      return decrypted.toString();
+  } catch (error) {
+      console.error("Decryption failed:", error);
+      return "";
+  }
+}
+
 async function loginStudents(registerNo, password) {
+  console.log("kk");
   const student = await Student.findOne({ registerNo });
 
-  if (student && (await bcrypt.compare(password, student.password))) {
-    return student;
+  if (student) {
+      const decryptedPassword = decrypt(student.password, SECRET_KEY);
+      if (password === decryptedPassword) {
+          return student;
+      }
   }
+
   return null;
 }
 
 async function resetPwd(phone, newPassword) {
-  const saltRounds = 5;
-  const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+  const encryptedPassword = encrypt(newPassword, SECRET_KEY);
 
   const updatedStudent = await Student.findOneAndUpdate(
-    { phone },
-    { password: hashedPassword },
-    { new: true }
+      { phone },
+      { password: encryptedPassword },
+      { new: true }
   );
 
   return updatedStudent;
