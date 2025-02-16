@@ -123,8 +123,7 @@ async function studentUpdate(
   let updateData = { name, phone, level, registerNo, gender };
 
   if (newPassword) {
-    const encryptedPassword = encrypt(newPassword, SECRET_KEY);
-    updateData.password = encryptedPassword;
+    await resetPwd(phone, newPassword);
   }
 
   return await Student.findByIdAndUpdate(id, updateData, { new: true });

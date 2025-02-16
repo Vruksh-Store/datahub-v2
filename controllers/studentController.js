@@ -12,7 +12,6 @@ exports.createStudent = async (req, res) => {
 exports.getStudents = async (req, res) => {
   try {
     const students = await studentService.getStudents();
-    console.log(students);
     res.json({ message: students });
   } catch (error) {
     res.status(500).json({ message: error.message });
