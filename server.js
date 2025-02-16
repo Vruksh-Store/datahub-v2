@@ -48,7 +48,7 @@ app.get("/load", async (req, res) => {
   }
 });
 
-// admin & staff route
+// admin & staff routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 
