@@ -20,32 +20,32 @@ const crypto = require("crypto");
 const SECRET_KEY = "webgi215.official@gmail.com";
 
 function encrypt(text, password) {
-    text = text.toString();
-    password = password.toString();
+  text = text.toString();
+  password = password.toString();
 
-    const key = crypto.createHash("sha256").update(password).digest();
-    const iv = crypto.randomBytes(16);
-    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
-    
-    let encrypted = cipher.update(text, "utf8", "hex");
-    encrypted += cipher.final("hex");
+  const key = crypto.createHash("sha256").update(password).digest();
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
 
-    return iv.toString("hex") + ":" + encrypted;
+  let encrypted = cipher.update(text, "utf8", "hex");
+  encrypted += cipher.final("hex");
+
+  return iv.toString("hex") + ":" + encrypted;
 }
 
 async function createStudent(studentData) {
-    const encryptedPassword = encrypt(studentData.password, SECRET_KEY);
+  const encryptedPassword = encrypt(studentData.password, SECRET_KEY);
 
-    const newStudent = new Student({
-        ...studentData,
-        password: encryptedPassword,
-    });
+  const newStudent = new Student({
+    ...studentData,
+    password: encryptedPassword,
+  });
 
-    return await newStudent.save();
+  return await newStudent.save();
 }
 
 async function getStudents() {
-  return await Student.find({}, { password: 0 });
+  return await Student.find();
 }
 
 async function getIndividualStudent(id) {
@@ -58,19 +58,19 @@ function decrypt(encryptedText, password) {
 
   password = password.toString();
   try {
-      const key = crypto.createHash("sha256").update(password).digest();
-      const parts = encryptedText.split(":");
-      const iv = Buffer.from(parts[0], "hex");
-      const encrypted = Buffer.from(parts[1], "hex");
+    const key = crypto.createHash("sha256").update(password).digest();
+    const parts = encryptedText.split(":");
+    const iv = Buffer.from(parts[0], "hex");
+    const encrypted = Buffer.from(parts[1], "hex");
 
-      const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-      let decrypted = decipher.update(encrypted);
-      decrypted = Buffer.concat([decrypted, decipher.final()]);
+    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+    let decrypted = decipher.update(encrypted);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
 
-      return decrypted.toString();
+    return decrypted.toString();
   } catch (error) {
-      console.error("Decryption failed:", error);
-      return "";
+    console.error("Decryption failed:", error);
+    return "";
   }
 }
 
@@ -79,10 +79,10 @@ async function loginStudents(registerNo, password) {
   const student = await Student.findOne({ registerNo });
 
   if (student) {
-      const decryptedPassword = decrypt(student.password, SECRET_KEY);
-      if (password === decryptedPassword) {
-          return student;
-      }
+    const decryptedPassword = decrypt(student.password, SECRET_KEY);
+    if (password === decryptedPassword) {
+      return student;
+    }
   }
 
   return null;
@@ -92,9 +92,9 @@ async function resetPwd(phone, newPassword) {
   const encryptedPassword = encrypt(newPassword, SECRET_KEY);
 
   const updatedStudent = await Student.findOneAndUpdate(
-      { phone },
-      { password: encryptedPassword },
-      { new: true }
+    { phone },
+    { password: encryptedPassword },
+    { new: true }
   );
 
   return updatedStudent;
@@ -110,6 +110,7 @@ async function feesUpdate(studentId, date, amount) {
   );
 }
 
+// need to change this to crypto
 async function studentUpdate(
   id,
   name,
@@ -122,8 +123,8 @@ async function studentUpdate(
   let updateData = { name, phone, level, registerNo, gender };
 
   if (newPassword) {
-    const saltRounds = 5;
-    updateData.password = await bcrypt.hash(newPassword, saltRounds);
+    const encryptedPassword = encrypt(newPassword, SECRET_KEY);
+    updateData.password = encryptedPassword;
   }
 
   return await Student.findByIdAndUpdate(id, updateData, { new: true });
