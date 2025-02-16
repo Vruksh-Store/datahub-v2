@@ -52,7 +52,7 @@ app.get("/load", async (req, res) => {
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 
-// assessments-routess
+// assessments-routess logic
 app.use("/api/primary-assessments", assessmentRoutes);
 app.use("/api/secondary-assessments", assessmentRoutes);
 app.use("/api/vocational-assessments", assessmentRoutes);
