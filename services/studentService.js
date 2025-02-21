@@ -129,8 +129,22 @@ async function studentUpdate(
   return await Student.findByIdAndUpdate(id, updateData, { new: true });
 }
 
+// students will be archived not deleted
 async function studentDelete(id) {
-  return await Student.findByIdAndDelete(id);
+  const student = await Student.findById(id);
+
+  if (!student) {
+    throw new Error("Student not found");
+  }
+
+  // Toggle the archive field
+  return await Student.findByIdAndUpdate(
+    id,
+    {
+      $set: { archive: !student.archive },
+    },
+    { new: true }
+  );
 }
 
 // // Function to fetch all assessments of a student
@@ -351,7 +365,7 @@ const getAllAssessments = async (studentId) => {
 async function getUserStudents(id) {
   return await Staff.find({ _id: id }).populate({
     path: "students",
-    select: "_id registerNo name level gender phone",
+    select: "_id registerNo name level gender phone archive",
   });
 }
 

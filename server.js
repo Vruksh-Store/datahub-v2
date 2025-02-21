@@ -17,7 +17,12 @@ const teachingLearningMaterialRoutes = require("./routes/teachingLearningMateria
 const workSpaceRoutes = require("./routes/workSpaceRoute.js");
 const staffMeetingRoutes = require("./routes/staffMeetingRoutes");
 const basicDetails = require("./data/basicDetails.js");
-const { Question, StaffMeeting, Staff, Student } = require("./models/models.js");
+const {
+  Question,
+  StaffMeeting,
+  Staff,
+  Student,
+} = require("./models/models.js");
 const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
 
 dotenv.config();
@@ -151,6 +156,15 @@ app.use("/api/basic", basicDetailsRoutes);
 //   }
 // };
 
+// async function updateStudentsArchive() {
+//   try {
+//       const result = await Student.updateMany({}, { $set: { archive: false } });
+//       console.log(`${result.modifiedCount} students updated.`);
+//   } catch (error) {
+//       console.error('Error updating students:', error);
+//   }
+// }
+
 console.log(process.env.MONGO_URI);
 const connectDB = async () => {
   try {
@@ -159,6 +173,8 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     console.log("MongoDB Connected");
+    // await updateStudentsArchive()
+    // console.log('added archived')
     // await syncModels();
     // console.log("synced");
   } catch (error) {
@@ -180,10 +196,10 @@ connectDB();
 //   const key = crypto.createHash("sha256").update(password).digest();
 //   const iv = crypto.randomBytes(16);
 //   const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
-  
+
 //   let encrypted = cipher.update(text, "utf8", "hex");
 //   encrypted += cipher.final("hex");
-  
+
 //   return iv.toString("hex") + ":" + encrypted;
 // }
 

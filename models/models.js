@@ -100,6 +100,7 @@ const StudentSchema = new mongoose.Schema(
         amountPaid: { type: Boolean },
       },
     ],
+    archive: { type: Boolean },
   },
   { timestamps: true }
 );
