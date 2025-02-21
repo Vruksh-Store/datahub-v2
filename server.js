@@ -36,9 +36,20 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/api/cron", async (req, res) => {
-  console.log("app waked");
-  res.send("k").status(200);
+// send request for about every 5 mins      
+app.get("/api/cronv1", async (req, res) => {
+  console.log("app waked via cron V1");
+  res.send("V1").status(200);
+});
+// send request for about every 7 mins      
+app.get("/api/cronv2", (req, res) => {
+  console.log("app waked via Cron V2");
+  res.send("V2").status(200);
+});
+// send request for about every 9 mins      
+app.get("/api/cronv3", (req, res) => {
+  console.log("app waked via Cron V3");
+  res.send("V3").status(200);
 });
 
 app.use("/api/students", studentRoutes);
