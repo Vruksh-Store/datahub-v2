@@ -109,8 +109,26 @@ const updateMaterial = asyncHandler(async (req, res) => {
 // Delete a material entry
 const deleteMaterial = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  await TeachingLearningMaterial.findByIdAndDelete(id);
-  res.status(200).json({ message: "Material entry deleted successfully" });
+
+  // Retrieve the current material to know its archive status
+  const material = await TeachingLearningMaterial.findById(id);
+  if (!material) {
+    return res.status(404).json({ message: "Material not found" });
+  }
+
+  // Toggle the current archive status
+  const updatedMaterial = await TeachingLearningMaterial.findByIdAndUpdate(
+    id,
+    { archieved: !material.archieved },
+    { new: true } // Return the updated document
+  );
+
+  res.status(200).json({
+    message: material.archieved
+      ? "Material recovered successfully"
+      : "Material archived successfully",
+    data: updatedMaterial,
+  });
 });
 
 module.exports = {

@@ -305,4 +305,23 @@ router.get("/staff/:staffId/recent-activities", async (req, res) => {
   }
 });
 
+// Get students assigned to a specific staff member
+router.get("/dstaff/:userId/students", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Find staff and populate student details
+    const staff = await Staff.findOne({ _id: userId }).populate("students");
+
+    if (!staff) {
+      return res.status(404).json({ message: "Staff member not found" });
+    }
+
+    res.status(200).json({ students: staff.students });
+  } catch (error) {
+    console.error("Error fetching staff students:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

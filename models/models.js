@@ -843,6 +843,10 @@ const teachingLearningMaterialSchema = new mongoose.Schema(
       required: true,
     },
     materials: [materialItemSchema], // Array of materials
+    archieved: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

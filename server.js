@@ -21,6 +21,7 @@ const {
   Question,
   StaffMeeting,
   Staff,
+  TeachingLearningMaterial,
   Student,
 } = require("./models/models.js");
 const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
@@ -36,17 +37,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// send request for about every 5 mins      
+// send request for about every 5 mins
 app.get("/api/cronv1", async (req, res) => {
   console.log("app waked via cron V1");
   res.send("V1").status(200);
 });
-// send request for about every 7 mins      
+// send request for about every 7 mins
 app.get("/api/cronv2", (req, res) => {
   console.log("app waked via Cron V2");
   res.send("V2").status(200);
 });
-// send request for about every 9 mins      
+// send request for about every 9 mins
 app.get("/api/cronv3", (req, res) => {
   console.log("app waked via Cron V3");
   res.send("V3").status(200);
@@ -236,13 +237,13 @@ connectDB();
 
 // mongoose.connection.on("open", async () => {
 //   try {
-//     await Question.updateMany(
-//       { type: "multiple-choice", colors: { $exists: false } }, // Match documents with type "multiple-choice" and no colors field
-//       { $set: { colors: [] } } // Set colors to an empty array
+//     await TeachingLearningMaterial.updateMany(
+//       { archieved: { $exists: true } }, // Match documents that have the "archieved" field
+//       { $unset: { archieved: "" } } // Remove the "archieved" field
 //     );
-//     console.log("Colors field initialized for multiple-choice questions");
+//     console.log("Archieved field removed from all documents");
 //   } catch (error) {
-//     console.error("Error initializing colors field:", error);
+//     console.error("Error removing archieved field:", error);
 //   }
 // });
 
