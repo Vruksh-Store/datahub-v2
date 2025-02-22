@@ -784,6 +784,53 @@ const WorkSpaceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// const teachingLearningMaterialSchema = new mongoose.Schema(
+//   {
+//     userName: {
+//       type: String,
+//       required: true,
+//     },
+//     userId: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "Staff", // Assuming 'Staff' is the model name for the staff collection
+//       required: true,
+//     },
+//     name: {
+//       type: String,
+//       required: true,
+//     },
+//     quantity: {
+//       type: Number,
+//       required: true,
+//     },
+//     remarks: {
+//       type: String,
+//       required: false,
+//     },
+//   },
+//   { timestamps: true }
+// );
+
+const materialItemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  remarks: {
+    type: String,
+    required: false,
+  },
+  date: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+});
+
 const teachingLearningMaterialSchema = new mongoose.Schema(
   {
     userName: {
@@ -795,21 +842,10 @@ const teachingLearningMaterialSchema = new mongoose.Schema(
       ref: "Staff", // Assuming 'Staff' is the model name for the staff collection
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-    remarks: {
-      type: String,
-      required: false,
-    },
+    materials: [materialItemSchema], // Array of materials
   },
   { timestamps: true }
-); // `timestamps` adds `createdAt` and `updatedAt` fields
+);
 
 const staffMeetingsSchema = new mongoose.Schema(
   {
