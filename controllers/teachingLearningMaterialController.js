@@ -76,10 +76,10 @@ const asyncHandler = require("express-async-handler");
 
 // Get all materials
 const getAllMaterials = asyncHandler(async (req, res) => {
-  const materials = await TeachingLearningMaterial.find().populate(
-    "userId",
-    "userName"
-  );
+  const materials = await TeachingLearningMaterial.find()
+    .populate("userId", "userName") // Populate the userId field with userName
+    .sort({ createdAt: -1 }); // Sort by createdAt in descending order (newest first)
+
   res.status(200).json({ data: materials });
 });
 
