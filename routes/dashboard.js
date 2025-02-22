@@ -293,12 +293,20 @@ router.get("/staff/:staffId/recent-activities", async (req, res) => {
   try {
     const staffId = req.params.staffId;
 
-    // Fetch the 5 most recent activities for the staff member
-    const activities = await Activity.find({ userId: staffId })
-      .sort({ createdAt: -1 })
-      .limit(5);
+    if (staffId === "username") {
+      const activities = await Activity.find({ userName: "adminadmin" })
+        .sort({ createdAt: -1 })
+        .limit(5);
 
-    res.json(activities);
+      res.json(activities);
+    } else {
+      // Fetch the 5 most recent activities for the staff member
+      const activities = await Activity.find({ userId: staffId })
+        .sort({ createdAt: -1 })
+        .limit(5);
+
+      res.json(activities);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send("Error fetching recent activities");
