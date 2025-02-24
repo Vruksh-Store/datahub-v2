@@ -55,6 +55,11 @@ app.get("/api/cronv3", (req, res) => {
   res.send("V3").status(200);
 });
 
+app.get("/api/cron", (req, res) => {
+  console.log("app waked via backend cron job");
+  res.send("V3").status(200);
+});
+
 app.use("/api/students", studentRoutes);
 
 cron.schedule("*/5 * * * *", async () => {
@@ -71,7 +76,7 @@ cron.schedule("*/5 * * * *", async () => {
 cron.schedule("*/5 * * * *", async () => {
   try {
     const response = await axios.get(
-      "https://vruksh-datahub-backend.onrender.com/api/cronv1"
+      "https://vruksh-datahub-backend.onrender.com/api/cron"
     ); // Replace with actual Server 1 URL
     console.log(`Server 1 Health Check: ${response.status}`);
   } catch (error) {
