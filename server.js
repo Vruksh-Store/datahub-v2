@@ -60,6 +60,11 @@ app.get("/api/cron", (req, res) => {
   res.send("V3").status(200);
 });
 
+app.get("/api/frontend", (req, res) => {
+  console.log("app pinged by frontend");
+  res.send("V3").status(200);
+});
+
 app.use("/api/students", studentRoutes);
 
 cron.schedule("*/5 * * * *", async () => {
