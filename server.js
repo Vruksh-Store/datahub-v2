@@ -25,6 +25,8 @@ const {
   Student,
 } = require("./models/models.js");
 const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
+const cron = require("node-cron");
+const axios = require("axios");
 
 dotenv.config();
 
@@ -54,6 +56,28 @@ app.get("/api/cronv3", (req, res) => {
 });
 
 app.use("/api/students", studentRoutes);
+
+cron.schedule("*/5 * * * *", async () => {
+  try {
+    const response = await axios.get(
+      "https://vruksh-store-backend.onrender.com/api/cron"
+    ); // Replace with actual Server 1 URL
+    console.log(`Server 1 Health Check: ${response.status}`);
+  } catch (error) {
+    console.error(`Error pinging Server 1: ${error.message}`);
+  }
+});
+
+cron.schedule("*/5 * * * *", async () => {
+  try {
+    const response = await axios.get(
+      "https://vruksh-datahub-backend.onrender.com/api/cronv1"
+    ); // Replace with actual Server 1 URL
+    console.log(`Server 1 Health Check: ${response.status}`);
+  } catch (error) {
+    console.error(`Error pinging Server 1: ${error.message}`);
+  }
+});
 
 app.get("/load", async (req, res) => {
   try {
