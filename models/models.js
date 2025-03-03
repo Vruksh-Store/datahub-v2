@@ -122,6 +122,12 @@ const AdminSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    pinnedStudents: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -169,6 +175,12 @@ const StaffSchema = new mongoose.Schema(
     assessments: [
       {
         type: mongoose.Schema.Types.ObjectId,
+      },
+    ],
+    pinnedStudents: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
       },
     ],
     logout: {

@@ -23,8 +23,10 @@ const {
   Staff,
   TeachingLearningMaterial,
   Student,
+  Admin,
 } = require("./models/models.js");
 const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
+const pinnedStudentRoutes = require("./routes/pinnedStudentRoute.js");
 const cron = require("node-cron");
 const axios = require("axios");
 
@@ -141,6 +143,8 @@ app.use("/api/staff-meetings", staffMeetingRoutes);
 
 app.use("/api/basic", basicDetailsRoutes);
 
+app.use("/api/pin", pinnedStudentRoutes);
+
 // const syncModels = async () => {
 //   console.log("Synchronizing models with the database...");
 
@@ -212,6 +216,31 @@ app.use("/api/basic", basicDetailsRoutes);
 // }
 
 console.log(process.env.MONGO_URI);
+
+// const migrateSchemas = async () => {
+//   try {
+//     // Connect to your MongoDB database
+
+//     // Add pinnedStudents field to all Admin documents
+//     await Admin.updateMany(
+//       {},
+//       { $set: { pinnedStudents: [] } }, // Initialize as an empty array
+//       { upsert: false }
+//     );
+
+//     // Add pinnedStudents field to all Staff documents
+//     await Staff.updateMany(
+//       {},
+//       { $set: { pinnedStudents: [] } }, // Initialize as an empty array
+//       { upsert: false }
+//     );
+
+//     console.log("Migration completed successfully.");
+//   } catch (error) {
+//     console.error("Migration failed:", error);
+//   }
+// };
+
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
@@ -223,6 +252,7 @@ const connectDB = async () => {
     // console.log('added archived')
     // await syncModels();
     // console.log("synced");
+    // await migrateSchemas();
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);
