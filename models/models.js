@@ -976,7 +976,7 @@ const PhysioTherapyAssessment = mongoose.model(
 );
 
 const CustomAssessment = mongoose.model(
-  "CustomlAssessment",
+  "CustomAssessment",
   CustomAssessmentSchema
 );
 
@@ -1001,23 +1001,23 @@ const WorkSpace = mongoose.model("WorkSpaces", WorkSpaceSchema);
 const History = mongoose.model("History", historySchema);
 
 module.exports = {
-    Student,
-    Admin,
-    Staff,
-    PrimaryAssessment,
-    SelfHelpSkillAssessment,
-    SecondaryAssessment,
-    VocationalAssessment,
-    PhysioTherapyAssessment,
-    CustomAssessment,
-    TemplateCaseRecord,
-    SpeechLanguageProfile,
-    Question,
-    HomeProgram,
-    Activity,
-    WorkSpace,
-    StaffMeeting,
-    TeachingLearningMaterial,
-    BasicDetails,
-    History,
+  Student,
+  Admin,
+  Staff,
+  PrimaryAssessment,
+  SelfHelpSkillAssessment,
+  SecondaryAssessment,
+  VocationalAssessment,
+  PhysioTherapyAssessment,
+  CustomAssessment,
+  TemplateCaseRecord,
+  SpeechLanguageProfile,
+  Question,
+  HomeProgram,
+  Activity,
+  WorkSpace,
+  StaffMeeting,
+  TeachingLearningMaterial,
+  BasicDetails,
+  History,
 };
