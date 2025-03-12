@@ -253,6 +253,14 @@ const SelfHelpSkillAssessmentSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
     review: {
       type: String,
     },
@@ -345,6 +353,14 @@ const PrimaryAssessmentSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
     review: {
       type: String,
     },
@@ -396,6 +412,14 @@ const SecondaryAssessmentSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
     review: {
       type: String,
     },
@@ -444,6 +468,14 @@ const VocationalAssessmentSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
     review: {
       type: String,
     },
@@ -491,6 +523,14 @@ const PhysioTherapyAssessmentSchema = new mongoose.Schema(
     date: {
       type: Date,
       default: Date.now,
+    },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
     },
     review: {
       type: String,
@@ -544,6 +584,14 @@ const CustomAssessmentSchema = new mongoose.Schema(
     date: {
       type: Date,
       default: Date.now,
+    },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
     },
     review: {
       type: String,

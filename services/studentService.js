@@ -16,6 +16,7 @@ const {
 } = require("../models/models");
 
 const crypto = require("crypto");
+const { start } = require("repl");
 
 const SECRET_KEY = "webgi215.official@gmail.com";
 
@@ -244,62 +245,62 @@ const getAllAssessments = async (studentId) => {
     const primaryAssessments = await PrimaryAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference", "userName username") // Populate only the userName from Staff
       .sort({ createdAt: -1 });
 
     const secondaryAssessments = await SecondaryAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffType staffReference ")
+      .select("date _id goal review staffType staffReference startDate endDate")
       .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const vocationalAssessments = await VocationalAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const physioTherapyAssessments = await PhysioTherapyAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const customAssessments = await CustomAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference");
 
     const templateCaseRecords = await TemplateCaseRecord.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const speechLanguageProfiles = await SpeechLanguageProfile.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const selfHelpSkillAssessment = await SelfHelpSkillAssessment.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference")
       .sort({ createdAt: -1 });
 
     const homePrograms = await HomeProgram.find({
       studentReference: studentId,
     })
-      .select("date _id goal review staffReference staffType")
+      .select("date _id goal review staffReference staffType startDate endDate")
       .populate("staffReference")
       .sort({ createdAt: -1 });
 
@@ -313,6 +314,8 @@ const getAllAssessments = async (studentId) => {
         review: assessment.review,
         date: assessment.date,
         userName: assessment.staffReference?.userName || null,
+        startDate: assessment.startDate,
+        endDate: assessment.endDate,
       })),
       ...secondaryAssessments.map((assessment) => ({
         branch: "secondary",
@@ -321,6 +324,8 @@ const getAllAssessments = async (studentId) => {
         review: assessment.review,
         date: assessment.date,
         userName: assessment.staffReference.userName || null,
+        startDate: assessment.startDate,
+        endDate: assessment.endDate,
       })),
       ...vocationalAssessments.map((assessment) => ({
         branch: "vocational",
@@ -329,6 +334,8 @@ const getAllAssessments = async (studentId) => {
         review: assessment.review,
         date: assessment.date,
         userName: assessment.staffReference?.userName || null,
+        startDate: assessment.startDate,
+        endDate: assessment.endDate,
       })),
       ...physioTherapyAssessments.map((assessment) => ({
         branch: "physiotherapy",
@@ -337,6 +344,8 @@ const getAllAssessments = async (studentId) => {
         review: assessment.review,
         date: assessment.date,
         userName: assessment.staffReference?.userName || null,
+        startDate: assessment.startDate,
+        endDate: assessment.endDate,
       })),
       ...customAssessments.map((assessment) => ({
         branch: "custom",
@@ -345,6 +354,8 @@ const getAllAssessments = async (studentId) => {
         review: assessment.review,
         date: assessment.date,
         userName: assessment.staffReference?.userName || null,
+        startDate: assessment.startDate,
+        endDate: assessment.endDate,
       })),
       ...selfHelpSkillAssessment.map((assessment) => ({
         branch: "selfhelp",
@@ -353,6 +364,8 @@ const getAllAssessments = async (studentId) => {
         review: assessment.review,
         date: assessment.date,
         userName: assessment.staffReference?.userName || null,
+        startDate: assessment.startDate,
+        endDate: assessment.endDate,
       })),
     ];
 
