@@ -27,6 +27,7 @@ const {
 } = require("./models/models.js");
 const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
 const pinnedStudentRoutes = require("./routes/pinnedStudentRoute.js");
+const historyRoutes = require("./routes/history.js");
 const cron = require("node-cron");
 const axios = require("axios");
 
@@ -144,6 +145,8 @@ app.use("/api/staff-meetings", staffMeetingRoutes);
 app.use("/api/basic", basicDetailsRoutes);
 
 app.use("/api/pin", pinnedStudentRoutes);
+
+app.use("/api/history", historyRoutes);
 
 // const syncModels = async () => {
 //   console.log("Synchronizing models with the database...");

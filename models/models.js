@@ -5,7 +5,13 @@ const activitySchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Staff",
-      required: true,
+    },
+    studentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
+    subTopic: {
+      type: String,
     },
     userName: {
       type: String,
@@ -13,6 +19,29 @@ const activitySchema = new mongoose.Schema(
     activity: {
       type: String,
       required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const historySchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+    },
+    studentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
+    activity: {
+      type: String,
+    },
+    type: {
+      type: String,
+    },
+    model: {
+      type: String,
     },
   },
   { timestamps: true }
@@ -969,23 +998,26 @@ const Activity = mongoose.model("Activity", activitySchema);
 
 const WorkSpace = mongoose.model("WorkSpaces", WorkSpaceSchema);
 
+const History = mongoose.model("History", historySchema);
+
 module.exports = {
-  Student,
-  Admin,
-  Staff,
-  PrimaryAssessment,
-  SelfHelpSkillAssessment,
-  SecondaryAssessment,
-  VocationalAssessment,
-  PhysioTherapyAssessment,
-  CustomAssessment,
-  TemplateCaseRecord,
-  SpeechLanguageProfile,
-  Question,
-  HomeProgram,
-  Activity,
-  WorkSpace,
-  StaffMeeting,
-  TeachingLearningMaterial,
-  BasicDetails,
+    Student,
+    Admin,
+    Staff,
+    PrimaryAssessment,
+    SelfHelpSkillAssessment,
+    SecondaryAssessment,
+    VocationalAssessment,
+    PhysioTherapyAssessment,
+    CustomAssessment,
+    TemplateCaseRecord,
+    SpeechLanguageProfile,
+    Question,
+    HomeProgram,
+    Activity,
+    WorkSpace,
+    StaffMeeting,
+    TeachingLearningMaterial,
+    BasicDetails,
+    History,
 };
