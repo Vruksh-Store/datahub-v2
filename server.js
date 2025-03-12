@@ -24,6 +24,12 @@ const {
   TeachingLearningMaterial,
   Student,
   Admin,
+  PrimaryAssessment,
+  SelfHelpSkillAssessment,
+  SecondaryAssessment,
+  VocationalAssessment,
+  PhysioTherapyAssessment,
+  CustomAssessment,
 } = require("./models/models.js");
 const basicDetailsRoutes = require("./routes/basicDetailsRoute.js");
 const pinnedStudentRoutes = require("./routes/pinnedStudentRoute.js");
@@ -263,6 +269,38 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+// const assessmentCollections = [
+//   PrimaryAssessment,
+//   SelfHelpSkillAssessment,
+//   SecondaryAssessment,
+//   VocationalAssessment,
+//   PhysioTherapyAssessment,
+//   CustomAssessment,
+// ];
+
+// mongoose.connection.once("open", async () => {
+//   try {
+//     for (const collectionName of assessmentCollections) {
+//       console.log(collectionName);
+//       await collectionName.updateMany(
+//         {},
+//         {
+//           $set: {
+//             startDate: new Date("2000-01-01"),
+//             endDate: new Date("2000-01-01"),
+//           },
+//         }
+//       );
+//       console.log(`Updated ${collectionName} collection.`);
+//     }
+//     console.log("All assessments updated successfully.");
+//   } catch (error) {
+//     console.error("Error updating assessments:", error);
+//   } finally {
+//     mongoose.connection.close();
+//   }
+// });
 
 // const crypto = require("crypto");
 
