@@ -77,7 +77,7 @@ app.get("/api/frontend", (req, res) => {
 
 app.use("/api/students", studentRoutes);
 
-cron.schedule("*/5 * * * *", async () => {
+cron.schedule("*/7 * * * *", async () => {
   try {
     const response = await axios.get(
       "https://vruksh-store-backend.onrender.com/api/cron"
@@ -88,16 +88,16 @@ cron.schedule("*/5 * * * *", async () => {
   }
 });
 
-cron.schedule("*/5 * * * *", async () => {
-  try {
-    const response = await axios.get(
-      "https://vruksh-datahub-backend.onrender.com/api/cron"
-    ); // Replace with actual Server 1 URL
-    console.log(`Server 1 Health Check: ${response.status}`);
-  } catch (error) {
-    console.error(`Error pinging Server 1: ${error.message}`);
-  }
-});
+// cron.schedule("*/5 * * * *", async () => {
+//   try {
+//     const response = await axios.get(
+//       "https://vruksh-datahub-backend.onrender.com/api/cron"
+//     ); // Replace with actual Server 1 URL
+//     console.log(`Server 1 Health Check: ${response.status}`);
+//   } catch (error) {
+//     console.error(`Error pinging Server 1: ${error.message}`);
+//   }
+// });
 
 app.get("/load", async (req, res) => {
   try {
